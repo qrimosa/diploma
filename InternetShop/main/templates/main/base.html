@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- <script src="{% static 'js/bootstrap.js' %}" defer></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    {% block links %}
+    {% endblock %}
+</head>
+<body>
+  <header>
+    <nav class="navbar bg-header">
+      <div class="container">
+          <a href="#" class="buttons-header">
+              <img src="{% static 'main/img/burger.png' %}" width="40px" alt="">
+          </a>
+          <a href="#">
+              <img src="{% static 'main/img/logo.png' %}" width="145px" alt="">
+          </a>
+          <button type="button" class="btn align-items-center btn-secondary d-flex gap-15">
+              <img src="{% static 'main/img/catalog-header.png' %}" width="32px" alt="">
+              <p class="montserrat-14 padding-margin-0">Каталог</p>
+          </button>
+          <form class="d-flex search-header" id="header-search" role="search">
+              <input class="form-control border-radius-search-header" type="search" placeholder="Я шукаю...">
+              <button class="btn btn-search" type="submit">Знайти</button>
+          </form>
+          <a href="#" class="buttons-header" data-bs-toggle="modal" data-bs-target="#regModal">
+              <img src="{% static 'main/img/auth.png' %}" width="40px" alt="">
+          </a>
+          <a href="#" class="buttons-header">
+              <img src="{% static 'main/img/backet.png' %}" width="40px" alt="">
+          </a>
+      </div>
+  </nav>
+  </header>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+</body>
+</html>

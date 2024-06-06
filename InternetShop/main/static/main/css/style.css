@@ -1,0 +1,116 @@
+.montserrat-14 {
+    font-family: 'Montserrat';
+    font-size: 14px;
+}
+
+.padding-margin-0 {
+    margin: 0;
+    padding: 0;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
+.buttons-header {
+    border-radius: 5px;
+    transition: all 0.5s;
+}
+
+.buttons-header:hover {
+    background-color: #fffff328;
+}
+
+.border-radius-search-header {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.border-radius-search-header:active {
+    box-shadow: none;
+}
+
+.search-header {
+    width: 434px;
+}
+
+.btn-search {
+    border-radius: 0px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #d7bbe9c4;
+}
+
+.btn-search:hover {
+    background-color: #d7bbe9;
+}
+
+.main-carousel {
+    border: 1px linear black;
+    width: 1500px;
+    height: 500px;
+    margin: auto;
+}
+
+.under-slider {
+    display: grid;
+    grid-template-columns: repeat(4, 20rem);
+    grid-row-gap: 70px;
+    grid-column-gap: 70px;
+    justify-content: center;
+}
+
+.h1 {
+    font-family: 'Montserrat';
+    font-size: 18px;
+    font-weight: 1000;
+}
+
+.card-under-slider {
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.text-under-slider {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-reg-auth {
+    display: flex;
+    gap: 25px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reg-auth-field {
+    border-radius: 16px;
+    align-items: center;
+    padding-left: 10px;
+    height: 50px;
+    width: 200px;
+    border: 2px rgba(0, 0, 0, 0.5) solid;
+    transition: all 0.1s;
+}
+
+.reg-auth-field:hover {
+    outline: none;
+    border: 2px #7A00B4 solid;
+}
+
+.btn-reg-auth:hover {
+    background-color: white;
+    transition: all 0.3s;
+}
+
+.btn-secondary {
+    border-radius: 10px
+}
