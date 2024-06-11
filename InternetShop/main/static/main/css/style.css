@@ -8,6 +8,10 @@
     padding: 0;
 }
 
+.width-100 {
+    width: 300px;
+}
+
 .gap-15 {
     gap: 15px;
 }
@@ -45,6 +49,10 @@
     background-color: #d7bbe9;
 }
 
+.background-backet {
+    background-color: #D7BBE9;
+}
+
 .main-carousel {
     border: 1px linear black;
     width: 1500px;
@@ -64,6 +72,7 @@
     font-family: 'Montserrat';
     font-size: 18px;
     font-weight: 1000;
+    color: black;
 }
 
 .card-under-slider {
@@ -113,4 +122,12 @@
 
 .btn-secondary {
     border-radius: 10px
+}
+
+.container-product {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 100px;
 }

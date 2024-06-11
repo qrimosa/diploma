@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,40 +10,235 @@
     <link rel="stylesheet" href="{% static 'main/css/bootstrap.css' %}">
     <script src="{% static 'main/js/bootstrap.js' %}" defer></script>
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="{% static 'main/js/script.js' %}"></script>
     {% block links %}
     {% endblock %}
 </head>
+
 <body>
-  <header>
-    <nav class="navbar bg-header">
-      <div class="container">
-          <a href="#" class="buttons-header">
-              <img src="{% static 'main/img/burger.png' %}" width="40px" alt="">
-          </a>
-          <a href="#">
-              <img src="{% static 'main/img/logo.png' %}" width="145px" alt="">
-          </a>
-          <button type="button" class="btn align-items-center btn-secondary d-flex gap-15">
-              <img src="{% static 'main/img/catalog-header.png' %}" width="32px" alt="">
-              <p class="montserrat-14 padding-margin-0">Каталог</p>
-          </button>
-          <form class="d-flex search-header" id="header-search" role="search">
-              <input class="form-control border-radius-search-header" type="search" placeholder="Я шукаю...">
-              <button class="btn btn-search" type="submit">Знайти</button>
-          </form>
-          <a href="#" class="buttons-header" data-bs-toggle="modal" data-bs-target="#regModal">
-              <img src="{% static 'main/img/auth.png' %}" width="40px" alt="">
-          </a>
-          <a href="#" class="buttons-header">
-              <img src="{% static 'main/img/backet.png' %}" width="40px" alt="">
-          </a>
-      </div>
-  </nav>
-  </header>
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
+    <header>
+        <nav class="navbar bg-header">
+            <div class="container">
+                <a href="#" class="buttons-header">
+                    <img src="{% static 'main/img/burger.png' %}" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" width="40px" alt="">
+                </a>
+                <a href="{% url 'main' %}">
+                    <img src="{% static 'main/img/logo.png' %}" width="145px" alt="">
+                </a>
+                <button data-bs-toggle="modal" data-bs-target="#catalogModal" type="button"
+                    class="btn align-items-center btn-secondary d-flex gap-15">
+                    <img src="{% static 'main/img/catalog-header.png' %}" width="32px" alt="">
+                    <p class="montserrat-14 padding-margin-0">Каталог</p>
+                </button>
+                <form class="d-flex search-header" id="header-search" role="search">
+                    <input class="form-control border-radius-search-header" type="search" placeholder="Я шукаю...">
+                    <button class="btn btn-search" type="submit">Знайти</button>
+                </form>
+                <a href="#" class="buttons-header" data-bs-toggle="modal" data-bs-target="#regModal">
+                    <img src="{% static 'main/img/auth.png' %}" width="40px" alt="">
+                </a>
+                <a href="#" class="buttons-header">
+                    <img src="{% static 'main/img/backet.png' %}" data-bs-toggle="modal" data-bs-target="#backetModal"
+                        width="40px" alt="">
+                </a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <div class="modal fade" id="regModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 h1" id="exampleModalLabel">Реєстрація</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-reg-auth">
+                        {% csrf_token %}
+                        <p class="hello-user-register" name="error"></p>
+                        <p class="register-error h1"></p>
+                        <input type="text" name="email" class="reg-auth-field" placeholder="Email">
+                        <input type="text" name="login" class="reg-auth-field" placeholder="Username">
+                        <input type="password" name="password" class="reg-auth-field" placeholder="Password">
+                        <input type="password" name="repeat-password" class="reg-auth-field"
+                            placeholder="Repeat password">
+                        <button type="button" id="btn-register" class="btn btn-primary btn-reg-auth">register</button>
+                    </form>
+                </div>
+                <div class="modal-footer form-reg-auth">
+                    <a href="#" class="h1" data-bs-toggle="modal" data-bs-target="#authModel">у мене вже є
+                        аккаунт</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="authModel" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 h1" id="authModalLabel">Авторизація</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="form-reg-auth" method="POST">
+                        {% csrf_token %}
+                        <p class="hello-user-login"></p>
+                        <p class="login-error h1"></p>
+                        <input type="text" name="username" class="reg-auth-field" placeholder="Username">
+                        <input type="password" name="loginPassword" class="reg-auth-field" placeholder="Password">
+                        <button type="button" id="btn-auth" class="btn btn-primary btn-reg-auth">login</button>
+                    </form>
+                </div>
+                <div class="modal-footer form-reg-auth">
+                    <a href="#" class="h1" id="btn-auth" data-bs-toggle="modal" data-bs-target="#regModal">у мене немає
+                        аккаунту</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <a href="#">
+                    <img src="{% static 'main/img/logo.png' %}" width="250px" alt="">
+                </a>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button> -->
+            </div>
+            <div class="offcanvas-body d-flex flex-column gap-15">
+                <a data-bs-toggle="modal" data-bs-target="#catalogModal" class="text-decoration-none mt-2" href="#">
+                    <div class="container d-flex align-items-center" type="button">
+                        <img src="{% static 'main/img/burger-catalog.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0 px-3" >Каталог товарів</h1>
+                    </div>
+                </a>
+                <a class="text-decoration-none" href="#">
+                    <div class="container d-flex align-items-center">
+                        <img src="{% static 'main/img/search.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0 px-3">Пошук</h1>
+                    </div>
+                </a>
+                <a class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#backetModal" href="#">
+                    <div class="container d-flex align-items-center">
+                        <img src="{% static 'main/img/burger-bucket.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0 px-3">Кошик</h1>
+                    </div>
+                </a>
+                <a class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#authModel" href="#">
+                    <div class="container d-flex align-items-center">
+                        <img src="{% static 'main/img/burger-auth.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0 px-3">Реєстрація/Вхід</h1>
+                    </div>
+                </a>
+                <a class="text-decoration-none" href="">
+                    <div class="container d-flex align-items-center">
+                        <img src="{% static 'main/img/user.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0 px-3">Про нас/Контакти</h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="catalogModal" tabindex="-1" aria-labelledby="catalogModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content align-items-start">
+                <div class="modal-body d-flex flex-column gap-15">
+                    <div role="button" class="container width-100">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0">Джинси</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div role="button" class="container width-100">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0">Джинси</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div role="button" class="container width-100">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0">Джинси</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div role="button" class="container width-100">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0">Джинси</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div role="button" class="container width-100">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0">Джинси</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div role="button" class="container width-100">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0">Джинси</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div role="button" class="container width-100">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0">Джинси</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="backetModal" tabindex="-1" aria-labelledby="backetModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content background-backet">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 h1" id="backetModalLabel">Кошик</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Оформити замовлення</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

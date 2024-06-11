@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container container-product">
+    <div class="img">
+        <img src="{% static 'main/img/example.svg' %}" alt="">
+    </div>
+    <div class="information d-flex flex-column gap-15">
+        <h1 class="h1">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</h1>
+        <hr>
+        <div class="container d-flex justify-content-around">
+            <p>41-01</p>
+            <p>Товар в наявності</p>
+        </div>
+        <hr>
+        <div class="container d-flex justify-content-around">
+            <p>1499 грн.</p>
+            <button type="button" class="btn btn-primary">Придбати</button>
+        </div>
+        <p class="">Джинси <b>Smash "Loose Fit"</b>- стильна та універсальна річь у вашому гардеробі. Вони чудово поєднуються з
+            будь-якими речами та підходять для повсякденного носіння
+            <br>
+            <br>
+            <b>Матеріал:</b>
+            100% бавовна.
+            <br>
+            <br>
+            <b>Країна виробник:</b>
+            Україна;
+            <br>
+            <br>
+            <b>Характеристики:</b>
+            Крій прямий;
+            Дві кишені спереду та дві ззаду;
+            Джинси середньої (класичної) посадки;
+            <br>
+            <br>
+            <b>Сезон:</b>
+            Всесезонний;
+            <br>
+            <br>
+            <b>Рекомендації щодо догляду:</b>
+            <br>
+            прання у звичайному режимі при температурі не вище 30°C, без віджиму;
+            відбілювання заборонено;
+            сушити у підвішеному стані, без застосування штучного сушіння.
+        </p>
+    </div>
+</div>
+{% endblock %}
