@@ -27,10 +27,9 @@ urlpatterns = [
     path('auth/', Authorization, name = 'Authorization'),
     path('product/<str:slug>', product, name='product'),
     path('about/', about, name = 'About'),
-    # path('example/', product2, name = 'Example'),
-    # path('cart/', cartprod, name = 'Cart'),
     path('info/', information, name = 'Info'),
-    path('cart/', cart, name='cart')
+    path('cart/', cart, name='cart'),
+    path('cart_remove/', cart_remove, name='cart_remove'),
 ]
 if DEBUG:
     urlpatterns += static(MEDIA_URL, document_root = MEDIA_ROOT)

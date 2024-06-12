@@ -53,10 +53,11 @@ $(document).ready(() => {
         $('.hello-user-login').text('')
         $('.login-error').text('')
     })
-    
+
     $('#add-cart').click(() => {
+        var cartUrl = $('#add-cart').data('cart-url');
         $.ajax({
-            url: window.location.assign("{% url 'cart' %}"),
+            url: cartUrl,
             type: 'POST',
             data: {
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
@@ -64,5 +65,28 @@ $(document).ready(() => {
             }
         })
     })
+    $('.minus').click(function () {
+        let id = $(this).data('id');
+        let $input = $('.count[data-id="' + id + '"]');
+        if ($input.val() > 1) {
+            $input.val(Number($input.val()) - 1);
+        }
+    });
+
+    $('.plus').click(function () {
+        let id = $(this).data('id');
+        let $input = $('.count[data-id="' + id + '"]');
+        $input.val(Number($input.val()) + 1);
+    });
+    $('.delete-item-from-cookie').click(() => {
+        var cartUrl = $('.delete-item-from-cookie').data('cart-url');
+        $.ajax({
+            url: cartUrl,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                index_array: $('input[name=index-array]').val(),
+            }
+        })
+    })
 })
-    

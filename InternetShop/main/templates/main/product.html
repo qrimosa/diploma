@@ -18,11 +18,12 @@
         </div>
         <hr>
         <div class="container d-flex justify-content-around">
-            <p>{{product.price}} грн.</p>
+            <b><p>{{product.price}} грн.</p></b>
             <form action="" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="product_id" value="{{product.id}}">
-                <button type="button" id="add-cart" class="btn btn-primary">Додати до кошику</button>
+                <button type="button" id="add-cart" data-cart-url="{% url 'cart' %}" class="btn btn-primary">Додати до
+                    кошику</button>
             </form>
         </div>
         <p class="">{{product.description}}
@@ -47,7 +48,6 @@
         <br>
         <br>
         <b>Рекомендації щодо догляду:</b>
-        <br>
         <ul>
             {% for i in guide %}
             <li>{{i}}</li>

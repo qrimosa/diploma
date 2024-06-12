@@ -69,7 +69,7 @@ def cart(request):
         prod_id = request.POST.get('product_id')
         print(prod_id)
         context = {'products':Product.objects.get(id=prod_id)}
-        response = render(request, 'main/cart.html', context)
+        response = render(request, 'main/product.html', context)
         old_cart = request.COOKIES.get('cart')
         product_id = request.POST.get('product_id')
         if old_cart:
@@ -84,20 +84,19 @@ def about(request):
 def information(request):
     return render(request, 'main/information.html')
 
-def cart_view(request):
+def cart_remove(request):
     cart = request.COOKIES.get('cart')
     context = {}
     if cart:
         cart_list = cart.split(" ")
         if request.method == "POST":
-            product_id = request.POST.get('product_id')
-            cart_list.remove(product_id)        
-        # list_products = [Product.objects.get(id = product_id) for product_id in cart_list]
+            index_array = request.POST.get('index_array')
+            print(index_array)
+            cart_list.remove(index_array)
         list_products = []
         for i in cart_list:
             list_products.append(Product.objects.get(id=i))
-        
         context['products'] = list_products
-        response = render(request, "cart/cart.html", context)
+        response = render(request, "main/base.html", context)
         response.set_cookie('cart', ' '.join(cart_list))
     return response

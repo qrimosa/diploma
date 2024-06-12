@@ -27,5 +27,3 @@ class ProductInCart(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE)
     session_key = models.CharField(max_length=255)
     amount = models.IntegerField()
-
-
