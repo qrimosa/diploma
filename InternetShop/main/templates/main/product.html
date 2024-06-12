@@ -3,47 +3,56 @@
 {% block content %}
 <div class="container container-product">
     <div class="img">
-        <img src="{% static 'main/img/example.svg' %}" alt="">
+        <img src="{{ product.image.url }}" width="400px" alt="">
     </div>
     <div class="information d-flex flex-column gap-15">
-        <h1 class="h1">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</h1>
+        <h1 class="h1">{{product.name}}</h1>
         <hr>
         <div class="container d-flex justify-content-around">
-            <p>41-01</p>
+            <p>{{product.article}}</p>
+            {% if product.available %}
             <p>Товар в наявності</p>
+            {% else %}
+            <p>Товару немає в наявності</p>
+            {% endif %}
         </div>
         <hr>
         <div class="container d-flex justify-content-around">
-            <p>1499 грн.</p>
-            <button type="button" class="btn btn-primary">Придбати</button>
+            <p>{{product.price}} грн.</p>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{product.id}}">
+                <button type="button" id="add-cart" class="btn btn-primary">Додати до кошику</button>
+            </form>
         </div>
-        <p class="">Джинси <b>Smash "Loose Fit"</b>- стильна та універсальна річь у вашому гардеробі. Вони чудово поєднуються з
-            будь-якими речами та підходять для повсякденного носіння
+        <p class="">{{product.description}}
             <br>
             <br>
             <b>Матеріал:</b>
-            100% бавовна.
+            {{product.material}}
             <br>
             <br>
             <b>Країна виробник:</b>
-            Україна;
+            {{product.country}}
             <br>
             <br>
             <b>Характеристики:</b>
-            Крій прямий;
-            Дві кишені спереду та дві ззаду;
-            Джинси середньої (класичної) посадки;
-            <br>
-            <br>
-            <b>Сезон:</b>
-            Всесезонний;
-            <br>
-            <br>
-            <b>Рекомендації щодо догляду:</b>
-            <br>
-            прання у звичайному режимі при температурі не вище 30°C, без віджиму;
-            відбілювання заборонено;
-            сушити у підвішеному стані, без застосування штучного сушіння.
+        <ul>
+            {% for i in characteristics %}
+            <li>{{i}}</li>
+            {% endfor %}
+        </ul>
+        <b>Сезон:</b>
+        Всесезонний;
+        <br>
+        <br>
+        <b>Рекомендації щодо догляду:</b>
+        <br>
+        <ul>
+            {% for i in guide %}
+            <li>{{i}}</li>
+            {% endfor %}
+        </ul>
         </p>
     </div>
 </div>

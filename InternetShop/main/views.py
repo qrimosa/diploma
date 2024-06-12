@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.db.utils import IntegrityError
 from django.http import JsonResponse
 from .models import *
+
 # Create your views here.
 def main(request: HttpResponse):
     return render(request, 'main/main.html')
@@ -56,21 +57,47 @@ def Authorization(request):
             return JsonResponse({'error': 'Заповніть всі поля'})
     return render(request, 'main/auth.html', context)
 
-def product(request, product):
-    
-    context = {'product':Product.objects.get(name=product)}
+def product(request, slug):
+    product = Product.objects.get(slug=slug)
+    context = {'product':product, 'characteristics': product.characteristics.get('name'), 'guide': product.guide.get('name')}
     return render(request, 'main/product.html', context)
-
-def product2(request: HttpResponse):
     
-    return render(request, 'main/product2.html')
-    # products = Product.objects.all()
-    # context = {"products": products}
+    # return render(request, 'main/product.html', context)
     
-    # if request.method == 'POST':
-    #     pass
-        
+def cart(request):
+    if request.method == 'POST':
+        prod_id = request.POST.get('product_id')
+        print(prod_id)
+        context = {'products':Product.objects.get(id=prod_id)}
+        response = render(request, 'main/cart.html', context)
+        old_cart = request.COOKIES.get('cart')
+        product_id = request.POST.get('product_id')
+        if old_cart:
+            product_id = old_cart + " " + product_id
+        response.set_cookie('cart', product_id)
+    return response
 
 def about(request):
     context = {}
     return render(request, 'main/about.html', context)
+
+def information(request):
+    return render(request, 'main/information.html')
+
+def cart_view(request):
+    cart = request.COOKIES.get('cart')
+    context = {}
+    if cart:
+        cart_list = cart.split(" ")
+        if request.method == "POST":
+            product_id = request.POST.get('product_id')
+            cart_list.remove(product_id)        
+        # list_products = [Product.objects.get(id = product_id) for product_id in cart_list]
+        list_products = []
+        for i in cart_list:
+            list_products.append(Product.objects.get(id=i))
+        
+        context['products'] = list_products
+        response = render(request, "cart/cart.html", context)
+        response.set_cookie('cart', ' '.join(cart_list))
+    return response

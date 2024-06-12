@@ -53,4 +53,16 @@ $(document).ready(() => {
         $('.hello-user-login').text('')
         $('.login-error').text('')
     })
+    
+    $('#add-cart').click(() => {
+        $.ajax({
+            url: window.location.assign("{% url 'cart' %}"),
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                product_id: $("input[name=product_id]").val(),
+            }
+        })
+    })
 })
+    

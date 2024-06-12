@@ -3,6 +3,8 @@
     font-size: 14px;
 }
 
+
+
 .padding-margin-0 {
     margin: 0;
     padding: 0;
@@ -130,4 +132,12 @@
     align-items: center;
     justify-content: space-evenly;
     gap: 100px;
+}
+
+.buttonSend{
+    background-color: #7A00B4;
+}
+#montserrat-16{
+    font-family: 'Montserrat';
+    font-size: 20px;
 }
