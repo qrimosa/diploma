@@ -119,3 +119,4 @@ def cart_remove(request):
 def log_out(request: HttpResponse):
     logout(request)
     return redirect('main')
+

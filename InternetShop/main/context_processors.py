@@ -10,4 +10,6 @@ def list_products_header(request):
     context = {
         'incartproduct': productsincart,
     }
+    categories = Category.objects.all()
+    context['categorys']=categories
     return context

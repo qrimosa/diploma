@@ -79,7 +79,7 @@
                         <input type="password" name="password" class="reg-auth-field" placeholder="Password">
                         <input type="password" name="repeat-password" class="reg-auth-field"
                             placeholder="Repeat password">
-                        <button type="button" id="btn-register" class="btn btn-primary btn-reg-auth">register</button>
+                        <button type="button" id="btn-register" data-cart-url="{% url 'Registration' %}" class="btn btn-primary btn-reg-auth">register</button>
                     </form>
                 </div>
                 <div class="modal-footer form-reg-auth">
@@ -103,7 +103,7 @@
                         <p class="login-error h1"></p>
                         <input type="text" name="username" class="reg-auth-field" placeholder="Username">
                         <input type="password" name="loginPassword" class="reg-auth-field" placeholder="Password">
-                        <button type="button" id="btn-auth" class="btn btn-primary btn-reg-auth">login</button>
+                        <button type="button" id="btn-auth" data-cart-url="{% url 'Authorization' %}" class="btn btn-primary btn-reg-auth">login</button>
                     </form>
                 </div>
                 <div class="modal-footer form-reg-auth">
@@ -158,108 +158,27 @@
     </div>
     <div class="modal fade" id="catalogModal" tabindex="-1" aria-labelledby="catalogModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
-            <div class="modal-content align-items-start">
+            <div class="modal-content d-flex flex-row align-items-start">
                 <div class="modal-body d-flex flex-column gap-15 catalogue-container">
-                    <div role="button" class="container width-100">
+                    {% for category in categorys %}
+                    <div role="button" data-category-id="{{category.id}}" class="container width-100 category-name">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0">Худі & Світшоти</p>
+                                <p class="h1 padding-margin-0">{{category.name}}</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
                             </div>
                         </div>
                     </div>
-                    <div role="button" class="container width-100">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <p class="h1 padding-margin-0">Футболки</p>
-                            </div>
-                            <div class="col-auto">
-                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
-                            </div>
-                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    {% for category in categorys %}
+                    <div class="container">
+                        <img src="{{category.image.url}}" class="category-image-{{category.id}}" style="display: none;" width="300px" alt="">
                     </div>
-                    <div role="button" class="container width-100">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <p class="h1 padding-margin-0">Кросівки</p>
-                            </div>
-                            <div class="col-auto">
-                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div role="button" class="container width-100">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <p class="h1 padding-margin-0">Штани</p>
-                            </div>
-                            <div class="col-auto">
-                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div role="button" class="container width-100">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <p class="h1 padding-margin-0">Куртки & Жилети</p>
-                            </div>
-                            <div class="col-auto">
-                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div role="button" class="container width-100">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <p class="h1 padding-margin-0">Шорти</p>
-                            </div>
-                            <div class="col-auto">
-                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div role="button" class="container width-100">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <p class="h1 padding-margin-0">Спортивні костюми</p>
-                            </div>
-                            <div class="col-auto">
-                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div role="button" class="container width-100">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <p class="h1 padding-margin-0">Кепки & Шапки</p>
-                            </div>
-                            <div class="col-auto">
-                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
-                            </div>
-                        </div>  
-                    </div>
-                    <div role="button" class="container width-100">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <p class="h1 padding-margin-0">Сумки & Рюкзаки</p>
-                            </div>
-                            <div class="col-auto">
-                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
-                            </div>
-                        </div>  
-                    </div>
-                    <div role="button" class="container width-100">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <p class="h1 padding-margin-0">Шкарпетки</p>
-                            </div>
-                            <div class="col-auto">
-                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
-                            </div>
-                        </div>  
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

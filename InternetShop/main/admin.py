@@ -4,3 +4,4 @@ from .models import *
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', 'color')}
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Category)

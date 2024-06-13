@@ -1,7 +1,8 @@
 $(document).ready(() => {
     $('#btn-register').click(() => {
+        var cartUrl = $('#btn-register').data('cart-url');
         $.ajax({
-            url: "/reg/",
+            url: cartUrl,
             type: 'POST',
             data: {
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
@@ -25,8 +26,9 @@ $(document).ready(() => {
         })
     })
     $('#btn-auth').click(() => {
+        var cartUrl = $('#btn-auth').data('cart-url');
         $.ajax({
-            url: 'auth/',
+            url: cartUrl,
             type: 'POST',
             data: {
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
@@ -91,5 +93,10 @@ $(document).ready(() => {
                 $('.cart-wrap').html(data.html);
             }
         })
+    })
+    $('.category-name').hover(function(){
+        var categoryId = $(this).data('category-id');
+        var categoryImage = $(`.category-image-${categoryId}`)
+        categoryImage.show()
     })
 })
