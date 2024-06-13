@@ -139,7 +139,7 @@
                         <h1 class="h1 padding-margin-0 px-3">Реєстрація/Вхід</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none" href="">
+                <a class="text-decoration-none" href="{% url 'About' %}">
                     <div class="container d-flex align-items-center">
                         <img src="{% static 'main/img/user.svg' %}" alt="">
                         <h1 class="h1 padding-margin-0 px-3">Про нас/Контакти</h1>
@@ -151,11 +151,11 @@
     <div class="modal fade" id="catalogModal" tabindex="-1" aria-labelledby="catalogModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content align-items-start">
-                <div class="modal-body d-flex flex-column gap-15">
+                <div class="modal-body d-flex flex-column gap-15 catalogue-container">
                     <div role="button" class="container width-100">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0">Джинси</p>
+                                <p class="h1 padding-margin-0">Худі & Світшоти</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
@@ -165,7 +165,7 @@
                     <div role="button" class="container width-100">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0">Джинси</p>
+                                <p class="h1 padding-margin-0">Футболки</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
@@ -175,7 +175,7 @@
                     <div role="button" class="container width-100">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0">Джинси</p>
+                                <p class="h1 padding-margin-0">Кросівки</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
@@ -185,7 +185,7 @@
                     <div role="button" class="container width-100">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0">Джинси</p>
+                                <p class="h1 padding-margin-0">Штани</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
@@ -195,7 +195,7 @@
                     <div role="button" class="container width-100">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0">Джинси</p>
+                                <p class="h1 padding-margin-0">Куртки & Жилети</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
@@ -205,7 +205,7 @@
                     <div role="button" class="container width-100">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0">Джинси</p>
+                                <p class="h1 padding-margin-0">Шорти</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
@@ -215,12 +215,42 @@
                     <div role="button" class="container width-100">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0">Джинси</p>
+                                <p class="h1 padding-margin-0">Спортивні костюми</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
                             </div>
                         </div>
+                    </div>
+                    <div role="button" class="container width-100">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0">Кепки & Шапки</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>  
+                    </div>
+                    <div role="button" class="container width-100">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0">Сумки & Рюкзаки</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>  
+                    </div>
+                    <div role="button" class="container width-100">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0">Шкарпетки</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>  
                     </div>
                 </div>
             </div>

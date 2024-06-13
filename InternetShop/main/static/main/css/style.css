@@ -175,3 +175,24 @@
     -webkit-appearance: none;
     margin: 0;
 }
+.catalogue-container::-webkit-scrollbar{
+    width: 6px;
+}
+
+.catalogue-container::-webkit-scrollbar-track{
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.catalogue-container::-webkit-scrollbar-thumb{
+    background: #48007273;
+    border-radius: 10px;
+}
+
+.catalogue-container::-webkit-scrollbar-thumb:hover{
+    background: #4f006398;
+}
+.catalogue-container{
+    overflow-y: scroll;
+    height: 350px; 
+}
