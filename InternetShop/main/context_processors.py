@@ -1,13 +1,13 @@
 from .models import *
 
 def list_products_header(request):    
-    cart = request.COOKIES.get('cart')
-    context = {}
-    if cart:
-        cart_list = cart.split(" ")
-        list_products = []
-        for i in cart_list:
-            list_products.append(Product.objects.get(id=i))
-        
-        context['list_products_header'] = list_products
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+    productsincart = ProductInCart.objects.filter(session_key=session_key)
+    context={}
+    context = {
+        'incartproduct': productsincart,
+    }
     return context

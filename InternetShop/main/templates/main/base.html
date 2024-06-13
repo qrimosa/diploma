@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    <header>
+    <header class = 'z-3 position-fixed top-0 start-50 translate-middle-x w-100'>
         <nav class="navbar bg-header">
             <div class="container">
                 <a href="#" class="buttons-header">
@@ -40,10 +40,18 @@
                     <input class="form-control border-radius-search-header" type="search" placeholder="Я шукаю...">
                     <button class="btn btn-search" type="submit">Знайти</button>
                 </form>
-                <a href="#" class="buttons-header" data-bs-toggle="modal" data-bs-target="#regModal">
-                    <img src="{% static 'main/img/auth.png' %}" width="40px" alt="">
-                </a>
-                <a href="#" id="backet-header" class="buttons-header">
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'Info' %}">
+                        <img src="{% static 'main/img/logged-user.png' %}" alt="">
+                    </a>
+                {% else %}
+                    <a href="#" class="buttons-header" data-bs-toggle="modal" data-bs-target="#regModal">
+                        <img src="{% static 'main/img/auth.png' %}" width="40px" alt="">
+                    </a>
+                {% endif %}
+                {% csrf_token %}
+                <a href="#" id="backet-header" data-cart-url="{% url 'cart_view' %}" class="buttons-header">
                     <img src="{% static 'main/img/backet.png' %}" data-bs-toggle="modal" data-bs-target="#backetModal"
                         width="40px" alt="">
                 </a>
@@ -139,7 +147,7 @@
                         <h1 class="h1 padding-margin-0 px-3">Реєстрація/Вхід</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none" href="{% url 'About' %}">
+                <a class="text-decoration-none" href="">
                     <div class="container d-flex align-items-center">
                         <img src="{% static 'main/img/user.svg' %}" alt="">
                         <h1 class="h1 padding-margin-0 px-3">Про нас/Контакти</h1>
@@ -263,41 +271,8 @@
                     <h1 class="modal-title fs-5 h1" id="backetModalLabel">Кошик</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body d-flex gap-15 flex-column">
-                    {% for product in list_products_header %}
-                    <div class="d-flex p-2 bg-white w-100 item-backet" style="width: 18rem;">
-                        <img src="{{product.image.url}}" width="100px" alt="...">
-                        <div class="card-body">
-                            <div class="container d-flex justify-content-between">
-                                <h5 class="h1">{{product.name}}</h5>
-                                <form action="" method="POST">
-                                    <input type="hidden" name="index-array" value="{{forloop.counter}}">
-                                    <div class="dropdown">
-                                        <img src="{% static 'main/img/three-dots.svg' %}" data-bs-toggle="dropdown"
-                                            role='button' width="30px" alt="">
-                                        <ul class="dropdown-menu">
-                                            <li><button type="button" data-cart-url="{% url 'cart_remove' %}"
-                                                    class="dropdown-item delete-item-from-cookie"
-                                                    href="#">Видалити</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="d-flex align-items-end justify-content-end p-2 gap-15 h-50">
-                                <div class="d-flex align-items-center">
-                                    <span class="minus" data-id="{{forloop.counter}}" id="minus"><img
-                                            src="{% static 'main/img/minus.svg' %}" width="30px" alt=""></span>
-                                    <input type="number" data-id="{{forloop.counter}}" class="count" id="count"
-                                        name="qty" value="1">
-                                    <span class="plus" data-id="{{forloop.counter}}" id="plus"><img
-                                            src="{% static 'main/img/plus.svg' %}" width="30px" alt=""></span>
-                                </div>
-                                <p class="h1 padding-margin-0">{{product.price}} грн</p>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
+                <div class="modal-body d-flex gap-15 flex-column cart-wrap">
+                    {% include 'main/cart_items.html' %}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Оформити замовлення</button>

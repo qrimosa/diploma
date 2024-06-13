@@ -3,6 +3,10 @@
     font-size: 14px;
 }
 
+main{
+    padding-top: 70px;
+}
+
 .padding-margin-0 {
     margin: 0;
     padding: 0;
@@ -194,5 +198,5 @@
 }
 .catalogue-container{
     overflow-y: scroll;
-    height: 350px; 
+    height: 350px;
 }

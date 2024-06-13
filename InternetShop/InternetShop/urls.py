@@ -30,6 +30,8 @@ urlpatterns = [
     path('info/', information, name = 'Info'),
     path('cart/', cart, name='cart'),
     path('cart_remove/', cart_remove, name='cart_remove'),
+    path('cart_view/', cart_view, name='cart_view'),
+    path('logout/', log_out, name = 'Logout'),
 ]
 if DEBUG:
     urlpatterns += static(MEDIA_URL, document_root = MEDIA_ROOT)

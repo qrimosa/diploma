@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% include 'main/base.html' %}
 {% load static %}
 {% block content %}
 <div class="container container-product">
@@ -18,11 +18,11 @@
         </div>
         <hr>
         <div class="container d-flex justify-content-around">
-            <b><p>{{product.price}} грн.</p></b>
+            <p>{{product.price}} грн.</p>
             <form action="" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="product_id" value="{{product.id}}">
-                <button type="button" id="add-cart" data-cart-url="{% url 'cart' %}" class="btn btn-primary">Додати до
+                <button type="button" id="add-cart" data-cart-view-url="{% url 'cart_view' %}" data-cart-url="{% url 'cart' %}" class="btn btn-primary">Додати до
                     кошику</button>
             </form>
         </div>
@@ -48,6 +48,7 @@
         <br>
         <br>
         <b>Рекомендації щодо догляду:</b>
+        <br>
         <ul>
             {% for i in guide %}
             <li>{{i}}</li>

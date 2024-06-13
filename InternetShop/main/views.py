@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db.utils import IntegrityError
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 from .models import *
 
 # Create your views here.
@@ -65,17 +66,27 @@ def product(request, slug):
     # return render(request, 'main/product.html', context)
     
 def cart(request):
+    products = Product.objects.all()
+    context = {
+        'products': products,
+    }
     if request.method == 'POST':
-        prod_id = request.POST.get('product_id')
-        print(prod_id)
-        context = {'products':Product.objects.get(id=prod_id)}
-        response = render(request, 'main/product.html', context)
-        old_cart = request.COOKIES.get('cart')
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.cycle_key()
+            session_key = request.session.session_key
         product_id = request.POST.get('product_id')
-        if old_cart:
-            product_id = old_cart + " " + product_id
-        response.set_cookie('cart', product_id)
-    return response
+        # product = Product.objects.get(id = product_id)
+        # print(product)
+        if product_id:
+            try:
+                product = ProductInCart.objects.get(product_id = product_id, session_key=session_key)
+                product.amount += 1
+                product.save()
+            except:
+                product = ProductInCart.objects.create(product_id=product_id,session_key=session_key, amount = 1)
+        # productsincart = ProductInCart.objects.filter(session_key=session_key)
+    return render(request, "main/product.html", context=context)
 
 def about(request):
     context = {}
@@ -84,19 +95,27 @@ def about(request):
 def information(request):
     return render(request, 'main/information.html')
 
+def cart_view(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+    productsincart = ProductInCart.objects.filter(session_key=session_key)
+    context = {
+        'incartproduct': productsincart,
+    }
+    html = render_to_string('main/cart_items.html', context)
+    return JsonResponse({"html":html})
+
 def cart_remove(request):
-    cart = request.COOKIES.get('cart')
     context = {}
-    if cart:
-        cart_list = cart.split(" ")
-        if request.method == "POST":
-            index_array = request.POST.get('index_array')
-            print(index_array)
-            cart_list.remove(index_array)
-        list_products = []
-        for i in cart_list:
-            list_products.append(Product.objects.get(id=i))
-        context['products'] = list_products
-        response = render(request, "main/base.html", context)
-        response.set_cookie('cart', ' '.join(cart_list))
-    return response
+    if request.method == 'POST':
+        product_in_cart_id = request.POST.get('product_in_cart_id')
+        print(request.POST)
+        product = ProductInCart.objects.get(id = product_in_cart_id)
+        product.delete()
+    return render(request, "main/base.html",context)
+
+def log_out(request: HttpResponse):
+    logout(request)
+    return redirect('main')
