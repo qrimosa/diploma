@@ -4,34 +4,40 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock %}
 {% block content %}
-<form id="filters-form">
-    {% csrf_token %}
-    <input type="hidden" id="category-url" data-category-url="{% url 'categories' category.slug %}">
-    <div class="price-input">
-        <div class="field">
-            <input type="number" class="input-min" value="{{min_price}}">
+<div class = 'd-flex flex-row'>
+    <form id="filters-form" class = 'ms-2 border'>
+        {% csrf_token %}
+        <input type="hidden" id="category-url" data-category-url="{% url 'categories' category.slug %}">
+        <div class="price-input">
+            <div class="field">
+                <input type="number" class="input-min" value="{{min_price}}">
+            </div>
+            <div class="separator">-</div>
+            <div class="field">
+                <input type="number" class="input-max" value="{{max_price}}">
+            </div>
         </div>
-        <div class="separator">-</div>
-        <div class="field">
-            <input type="number" class="input-max" value="{{max_price}}">
+        <div class="slider">
+            <div class="progress"></div>
         </div>
+        <div class="range-input">
+            <input type="range" id="min-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
+                value="{{min_price}}">
+            <input type="range" id="max-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
+                value="{{max_price}}">
+        </div>
+        {% for color in colors %}
+        <div class = 'd-flex flex-column mt-2'>
+            <div class = 'd-flex flex-row gap-2'>
+                <label for="{{color.color}}">{{color.color}}</label>
+                <input type="checkbox" name="colors-filter" id="{{color.color}}">
+            </div>    
+        </div>
+        {% endfor %}
+    </form>
+    <div id="products"></div>
+    <div id="product-list" class="under-slider ms-2 border w-100">
+        {% include 'main/categories_filter.html' %}
     </div>
-    <div class="slider">
-        <div class="progress"></div>
-    </div>
-    <div class="range-input">
-        <input type="range" id="min-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
-            value="{{min_price}}">
-        <input type="range" id="max-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
-            value="{{max_price}}">
-    </div>
-    {% for color in colors %}
-    <label for="{{color.color}}">{{color.color}}</label>
-    <input type="checkbox" name="colors-filter" id="{{color.color}}">
-    {% endfor %}
-</form>
-<div id="products"></div>
-<div id="product-list" class="under-slider">
-    {% include 'main/categories_filter.html' %}
 </div>
 {% endblock %}
