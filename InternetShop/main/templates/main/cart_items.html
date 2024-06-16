@@ -2,10 +2,10 @@
 <script src="{% static 'main/js/script-cart.js' %}"></script>
 {% for product in incartproduct %}
 <div class="d-flex p-2 bg-white w-100 item-backet" style="width: 18rem;">
-    <img src="{{product.product.image.url}}" width="100px" alt="...">
+    <img src="{{product.product.image.url}}" width="120px" alt="...">
     <div class="card-body">
         <div class="container d-flex justify-content-between">
-            <h5 class="h1">{{product.product.name}}</h5>
+            <h5 class="h2">{{product.product.name}}</h5>
             <form action="" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="product_in_cart_id" value="{{product.id}}">
@@ -24,14 +24,15 @@
         <div class="d-flex align-items-end justify-content-end p-2 gap-15 h-50">
             <div class="d-flex align-items-center">
                 <span class="minus" data-id="{{forloop.counter}}" id="minus"><img
-                        src="{% static 'main/img/minus.svg' %}" width="30px" alt=""></span>
+                        src="{% static 'main/img/minus.svg' %}" width="20px" alt=""></span>
                 <input type="number" data-id="{{forloop.counter}}" class="count" id="count" name="qty"
                     value="{{product.amount}}">
                 <span class="plus" data-id="{{forloop.counter}}" id="plus"><img src="{% static 'main/img/plus.svg' %}"
-                        width="30px" alt=""></span>
+                        width="20px" alt=""></span>
             </div>
-            <p class="h1 padding-margin-0">{{product.product.price}} грн</p>
         </div>
+        <p class="h1 padding-margin-0 d-flex justify-content-end">{{product.product.price}} грн</p>
     </div>
 </div>
+<hr>
 {% endfor %}

@@ -52,7 +52,7 @@
                 {% endif %}
                 {% csrf_token %}
                 <a href="#" id="backet-header" data-cart-url="{% url 'cart_view' %}" class="buttons-header">
-                    <img src="{% static 'main/img/backet.png' %}" data-bs-toggle="modal" data-bs-target="#backetModal"
+                    <img src="{% static 'main/img/backet.png' %}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBacket"
                         width="40px" alt="">
                 </a>
             </div>
@@ -187,7 +187,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="backetModal" tabindex="-1" aria-labelledby="backetModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="backetModal" tabindex="-1" aria-labelledby="backetModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content background-backet">
                 <div class="modal-header">
@@ -201,6 +201,18 @@
                     <button type="button" class="btn btn-primary">Оформити замовлення</button>
                 </div>
             </div>
+        </div>
+    </div> -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBacket" aria-labelledby="offcanvasBacketLabel">
+        <div class="offcanvas-header">
+            <h3 class="offcanvas-title" id="offcanvasRightLabel">Кошик</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex gap-15 flex-column cart-wrap backet-body">
+            {% include 'main/cart_items.html' %}
+        </div>
+        <div class = 'offcanvas-footer d-flex justify-content-center py-2'>
+            <button type = 'button' class = 'btn btn-primary h1' style = 'width: 350px; height: 50px;'>Оформити замовлення</button>
         </div>
     </div>
 </body>
