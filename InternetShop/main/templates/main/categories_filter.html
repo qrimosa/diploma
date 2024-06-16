@@ -1,0 +1,13 @@
+{% load static %}
+{% for product in products %}
+<div class="card" data-price="{{product.price}}" style="width: 18rem;">
+    <img src="{{product.image.url}}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <p class="card-text">{{product.name}}</p>
+        <div class="d-flex card-under-slider">
+            <h1 class="h1">{{product.price}} грн.</h1>
+            <a href="{% url 'product' product.slug %}" class="btn btn-primary montserrat-14">Детальніше</a>
+        </div>
+    </div>
+</div>
+{% endfor %}

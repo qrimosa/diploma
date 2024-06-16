@@ -111,7 +111,6 @@ def cart_remove(request):
     context = {}
     if request.method == 'POST':
         product_in_cart_id = request.POST.get('product_in_cart_id')
-        print(request.POST)
         product = ProductInCart.objects.get(id = product_in_cart_id)
         product.delete()
     return render(request, "main/base.html",context)
@@ -120,3 +119,20 @@ def log_out(request: HttpResponse):
     logout(request)
     return redirect('main')
 
+def categories(request, category):
+    category_obj = Category.objects.get(slug=category)
+    products_obj = Product.objects.filter(category=category_obj)
+    colors = products_obj.values('color').distinct()
+    products_list = products_obj.values_list('price')
+    min_price = products_list.order_by('price').first()
+    max_price = products_list.order_by('price').last()
+    context = {'category': category_obj, 'products':products_obj, 'colors':colors, 'max_price': max_price[0], 'min_price': min_price[0]}
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        category_obj = Category.objects.get(slug=category)
+        products = Product.objects.filter(category = category_obj,price__range=(request.GET.get('min_price'), request.GET.get('max_price')))
+        colors = request.GET.getlist('colors[]')
+        if colors:
+            products = products.filter(color__in = colors)
+        html = render_to_string('main/categories_filter.html', {'products': products})
+        return JsonResponse({"html":html})
+    return render(request, 'main/categories.html', context)

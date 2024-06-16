@@ -32,6 +32,8 @@ urlpatterns = [
     path('cart_remove/', cart_remove, name='cart_remove'),
     path('cart_view/', cart_view, name='cart_view'),
     path('logout/', log_out, name = 'Logout'),
+    path('categories/<str:category>', categories, name='categories'),
+    # path('categories/<str:category>', categories_filter, name='categories_filter')
 ]
 if DEBUG:
     urlpatterns += static(MEDIA_URL, document_root = MEDIA_ROOT)
