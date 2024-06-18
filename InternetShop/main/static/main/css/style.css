@@ -290,20 +290,52 @@ input[type='range']::-webkit-slider-thumb {
     background: #7A00B4;
 }
 
-.backet-body::-webkit-scrollbar{
+.backet-body::-webkit-scrollbar {
     width: 8px;
 }
 
-.backet-body::-webkit-scrollbar-track{
+.backet-body::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
 }
 
-.backet-body::-webkit-scrollbar-thumb{
+.backet-body::-webkit-scrollbar-thumb {
     background: #48007273;
     border-radius: 10px;
 }
 
-.backet-body::-webkit-scrollbar-thumb:hover{
+.backet-body::-webkit-scrollbar-thumb:hover {
     background: #4f006398;
+}
+
+.burger-img {
+    transition: opacity 0.5s ease, max-height 0.5s ease;
+    opacity: 1;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.burger-img.hidden {
+    opacity: 0;
+    max-height: 0;
+}
+
+.burger-img {
+    transition: opacity 0.5s ease, max-height 0.5s ease;
+    opacity: 1;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.burger-img.hidden {
+    opacity: 0;
+    max-height: 0;
+}
+
+.burger-item {
+    transition: text-decoration 0.3s ease;
+}
+
+.burger-item.hovered h1 {
+    text-decoration: underline;
 }

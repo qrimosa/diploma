@@ -4,7 +4,7 @@
 <div class="d-flex p-2 bg-white w-100 item-backet" style="width: 18rem;">
     <img src="{{product.product.image.url}}" width="120px" alt="...">
     <div class="card-body">
-        <div class="container d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
             <h5 class="h2">{{product.product.name}}</h5>
             <form action="" method="POST">
                 {% csrf_token %}
@@ -31,7 +31,7 @@
                         width="20px" alt=""></span>
             </div>
         </div>
-        <p class="h1 padding-margin-0 d-flex justify-content-end">{{product.product.price}} грн</p>
+        <p class="h1 padding-margin-0 d-flex justify-content-end product-price">{{product.product.price}} грн</p>
     </div>
 </div>
 <hr>

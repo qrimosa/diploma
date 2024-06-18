@@ -2,46 +2,88 @@
 {% load static %}
 {% block content %}
 <div class="container-fluid mt-5">
-  <div class="accordion" id="accordionExample">
-      <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-              <button class="accordion-button btn-block" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Особисті дані
-              </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                  <h6>Призвище:</h6> 
-                  <h6>Ім'я:</h6>
-              </div>
-          </div>
-      </div>
-      <div class="accordion-item">
-          <h2 class="accordion-header" id="headingTwo">
-              <button class="accordion-button collapsed btn-block" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Мої замовлення
-              </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <h6>...</h6>
-              </div>
-          </div>
-      </div>
-      <div class="accordion-item">
-          <h2 class="accordion-header" id="headingThree">
-              <button class="accordion-button collapsed btn-block" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  Логін
-              </button>
-          </h2>
-          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                  <h6>Ім'я користувача: {{user.username}}</h6>
-                  <h6>Електронна пошта: {{user.email}}</h6>
-                  <a class = 'btn btn-outline-danger' href="{% url 'Logout' %}">Logout</a>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button btn-block" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Особисті дані
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <h6>Призвище:</h6>
+                    <h6>Ім'я:</h6>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed btn-block" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Мої замовлення
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body cart-wrap">
+                    {% for product in products_in_cart %}
+                    <div class="d-flex p-2 bg-white w-100 item-backet" style="width: 18rem;">
+                        <img src="{{product.product.image.url}}" width="120px" alt="...">
+                        <div class="card-body">
+                            <div class="ml-1 d-flex justify-content-between">
+                                <h5 class="h2">{{product.product.name}}</h5>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_in_cart_id" value="{{product.id}}">
+                                    <div class="dropdown">
+                                        <img src="{% static 'main/img/three-dots.svg' %}" data-bs-toggle="dropdown"
+                                            role='button' width="30px" alt="">
+                                        <ul class="dropdown-menu">
+                                            <li><button type="button" data-product-id="{{product.id}}"
+                                                    data-cart-url="{% url 'cart_remove' %}"
+                                                    class="dropdown-item delete-item-from-cart"
+                                                    href="#">Видалити</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="d-flex align-items-end justify-content-end p-2 gap-15 h-50">
+                                <div class="d-flex align-items-center">
+                                    <span class="minus" data-id="{{forloop.counter}}" id="minus"><img
+                                            src="{% static 'main/img/minus.svg' %}" width="20px" alt=""></span>
+                                    <input type="number" data-id="{{forloop.counter}}" class="count" id="count"
+                                        name="qty" value="{{product.amount}}">
+                                    <span class="plus" data-id="{{forloop.counter}}" id="plus"><img
+                                            src="{% static 'main/img/plus.svg' %}" width="20px" alt=""></span>
+                                </div>
+                            </div>
+                            <p class="h1 padding-margin-0 d-flex justify-content-end">{{product.product.price}} грн</p>
+                        </div>
+                    </div>
+                    <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed btn-block" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Логін
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <h6>Ім'я користувача: {{user.username}}</h6>
+                    <h6>Електронна пошта: {{user.email}}</h6>
+                    <a class='btn btn-outline-danger' href="{% url 'Logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

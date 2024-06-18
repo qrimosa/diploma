@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="{% static 'main/js/script.js' %}" defer></script>
+    <script src="{% static 'main/js/base.js' %}" defer></script>
     {% block links %}
     {% endblock %}
 </head>
@@ -52,8 +53,8 @@
                 {% endif %}
                 {% csrf_token %}
                 <a href="#" id="backet-header" data-cart-url="{% url 'cart_view' %}" class="buttons-header">
-                    <img src="{% static 'main/img/backet.png' %}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBacket"
-                        width="40px" alt="">
+                    <img src="{% static 'main/img/backet.png' %}" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasBacket" width="40px" alt="">
                 </a>
             </div>
         </nav>
@@ -125,34 +126,36 @@
                 <!-- <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button> -->
             </div>
             <div class="offcanvas-body d-flex flex-column gap-15">
-                <a data-bs-toggle="modal" data-bs-target="#catalogModal" class="text-decoration-none mt-2" href="#">
-                    <div class="container d-flex align-items-center" type="button">
-                        <img src="{% static 'main/img/burger-catalog.svg' %}" alt="">
-                        <h1 class="h1 padding-margin-0 px-3">Каталог товарів</h1>
+                <a data-bs-toggle="modal" data-bs-target="#catalogModal" class="text-decoration-none mt-2 burger-item"
+                    href="#">
+                    <div class="container d-flex align-items-center gap-15" type="button">
+                        <img class="burger-img" src="{% static 'main/img/burger-catalog.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0">Каталог товарів</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none" href="#">
-                    <div class="container d-flex align-items-center">
-                        <img src="{% static 'main/img/search.svg' %}" alt="">
-                        <h1 class="h1 padding-margin-0 px-3">Пошук</h1>
+                <a class="text-decoration-none burger-item" href="#">
+                    <div class="container d-flex align-items-center gap-15">
+                        <img class="burger-img" src="{% static 'main/img/search.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0">Пошук</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#backetModal" href="#">
-                    <div class="container d-flex align-items-center">
-                        <img src="{% static 'main/img/burger-bucket.svg' %}" alt="">
-                        <h1 class="h1 padding-margin-0 px-3">Кошик</h1>
+                <a class="text-decoration-none burger-item" data-bs-toggle="modal" data-bs-target="#backetModal"
+                    href="#">
+                    <div class="container d-flex align-items-center gap-15">
+                        <img class="burger-img" src="{% static 'main/img/burger-bucket.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0">Кошик</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#authModel" href="#">
-                    <div class="container d-flex align-items-center">
-                        <img src="{% static 'main/img/burger-auth.svg' %}" alt="">
-                        <h1 class="h1 padding-margin-0 px-3">Реєстрація/Вхід</h1>
+                <a class="text-decoration-none burger-item" data-bs-toggle="modal" data-bs-target="#authModel" href="#">
+                    <div class="container d-flex align-items-center gap-15">
+                        <img class="burger-img" src="{% static 'main/img/burger-auth.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0">Реєстрація/Вхід</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none" href="">
-                    <div class="container d-flex align-items-center">
-                        <img src="{% static 'main/img/user.svg' %}" alt="">
-                        <h1 class="h1 padding-margin-0 px-3">Про нас/Контакти</h1>
+                <a class="text-decoration-none burger-item" href="">
+                    <div class="container d-flex align-items-center gap-15">
+                        <img class="burger-img" src="{% static 'main/img/user.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0">Про нас/Контакти</h1>
                     </div>
                 </a>
             </div>
@@ -211,8 +214,10 @@
         <div class="offcanvas-body d-flex gap-15 flex-column cart-wrap backet-body">
             {% include 'main/cart_items.html' %}
         </div>
-        <div class = 'offcanvas-footer d-flex justify-content-center py-2'>
-            <button type = 'button' class = 'btn btn-primary h1' style = 'width: 350px; height: 50px;'>Оформити замовлення</button>
+        <div class='offcanvas-footer d-flex justify-content-center flex-column align-items-center py-2'>
+            <h2 class="cart-footer-price montserrat-16">Разом 4400 грн.</h2>
+            <button type='button' class='btn btn-primary h1' style='width: 350px; height: 50px;'>Оформити
+                замовлення</button>
         </div>
     </div>
 </body>

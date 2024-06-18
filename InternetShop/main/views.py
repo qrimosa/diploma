@@ -9,7 +9,8 @@ from .models import *
 
 # Create your views here.
 def main(request: HttpResponse):
-    return render(request, 'main/main.html')
+    context = {"all_products": Product.objects.all()}
+    return render(request, 'main/main.html', context)
 
 def Registration(request):
     context = {}
@@ -93,7 +94,12 @@ def about(request):
     return render(request, 'main/about.html', context)
 
 def information(request):
-    return render(request, 'main/information.html')
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+    context = {'products_in_cart': ProductInCart.objects.filter(session_key=session_key)}
+    return render(request, 'main/information.html',context)
 
 def cart_view(request):
     session_key = request.session.session_key

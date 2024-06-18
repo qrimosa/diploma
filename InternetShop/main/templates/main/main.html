@@ -11,15 +11,15 @@
             aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-        <div class="carousel-item active">
+        <a href="{% url 'categories' 'krosivki' %}" role="button" class="carousel-item active">
             <img src="{% static 'main/img/slider-1-1.svg' %}" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
+        </a>
+        <a href="{% url 'categories' 'shorti' %}" role="button" class="carousel-item">
             <img src="{% static 'main/img/slider-1-2.svg' %}" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
+        </a>
+        <a href="{% url 'categories' 'futbolki' %}" role="button" class="carousel-item">
             <img src="{% static 'main/img/slider-1-3.svg' %}" class="d-block w-100" alt="...">
-        </div>
+        </a>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
         data-bs-slide="prev">
@@ -36,126 +36,17 @@
     <h1>Новинки🔥</h1>
 </div>
 <div class="under-slider">
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
+    {% for product in all_products %}
+    <div class="card" data-price="{{product.price}}" style="width: 18rem;">
+        <img src="{{product.image.url}}" class="card-img-top" alt="...">
         <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
+            <p class="card-text">{{product.name}}</p>
             <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
+                <h1 class="h1">{{product.price}} грн.</h1>
+                <a href="{% url 'product' product.slug %}" class="btn btn-primary montserrat-14">Детальніше</a>
             </div>
         </div>
     </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1 padding-margin-0>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'main/img/card-img.svg' %}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">ДЖИНСИ SMASH "LOOSE FIT" ЧОРНІ</p>
-            <div class="d-flex card-under-slider">
-                <h1 class="h1">1499 грн.</h1>
-                <a href="#" class="btn btn-primary montserrat-14">Детальніше</a>
-            </div>
-        </div>
-    </div>
-
+    {% endfor %}
 </div>
 {% endblock %}

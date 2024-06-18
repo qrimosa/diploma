@@ -5,8 +5,8 @@ $(document).ready(() => {
         if ($input.val() > 1) {
             $input.val(Number($input.val()) - 1);
         }
-    });
 
+    });
     $('.plus').click(function () {
         let id = $(this).data('id');
         let $input = $('.count[data-id="' + id + '"]');
@@ -34,6 +34,15 @@ $(document).ready(() => {
                     success: (data) => {
                         // console.log(data.html)
                         $('.cart-wrap').html(data.html);
+                        let total = 0;
+                        $('.item-backet').each(function () {
+                            console.log(this)
+                            // $('.cart-footer-price').text(`Разом: ${parseInt($('.product-price').text()) * $('#count').val()} грн`)
+                            let price = parseInt($(this).find('.product-price').text())
+                            let count = $(this).find('.count').val()
+                            total += price * count
+                        })
+                        $('.cart-footer-price').text(`Разом: ${total} грн`);
                     }
                 })
             }
