@@ -1,10 +1,14 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
 
 {% block title %}{{ title }} | {{ site_title|default:_('NEW TITLE') }}{% endblock %}
+
 {% block extrastyle %}
+<link rel="stylesheet" href="{% static 'main/css/admin.css' %}">
 {% endblock %}
+
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">DJANGO TEST</a></h1>
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Адмін-панель NetNiche</a></h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}

@@ -8,8 +8,13 @@ class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name='Назва')
     image = models.ImageField(verbose_name='Зображення')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, blank=True, null=True)
+    
     def __str__(self):
         return f'{self.name}'
+    
+    class Meta:
+        verbose_name = 'Категорія'
+        verbose_name_plural = 'Категорії'
     
 class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name='Назва')
@@ -24,11 +29,16 @@ class Product(models.Model):
     guide = models.JSONField(default=dict, verbose_name='Рекомендації щодо догляду')
     description = models.TextField(verbose_name='Опис')
     size = models.CharField(max_length=255, verbose_name='Розмір')
-    slug = models.SlugField(max_length=255, unique=True, db_index=True)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     color = models.CharField(max_length=255, verbose_name='Колір')
     category = models.ForeignKey(Category, on_delete = models.CASCADE, verbose_name='Категорія')
+    
     def __str__(self):
         return f'{self.name}'
+    
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товари'
 
 
 class ProductInCart(models.Model):
