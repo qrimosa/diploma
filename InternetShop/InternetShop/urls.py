@@ -33,6 +33,8 @@ urlpatterns = [
     path('cart_view/', cart_view, name='cart_view'),
     path('logout/', log_out, name = 'Logout'),
     path('categories/<str:category>', categories, name='categories'),
+    path('get_product_names', get_product_names, name='get_product_names'),
+    path('checkout', checkout, name='checkout')
     # path('categories/<str:category>', categories_filter, name='categories_filter')
 ]
 if DEBUG:

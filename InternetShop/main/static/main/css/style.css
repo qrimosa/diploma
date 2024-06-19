@@ -40,6 +40,7 @@ main {
 
 .search-header {
     width: 434px;
+    position: relative;
 }
 
 .btn-search {
@@ -338,4 +339,31 @@ input[type='range']::-webkit-slider-thumb {
 
 .burger-item.hovered h1 {
     text-decoration: underline;
+}
+
+.result-box {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 90;
+    width: 100%;
+    border-radius: 0 0 3px 3px;
+    background-color: #fff;
+    overflow: hidden
+}
+
+.result-box ul {
+    border-top: 1px solid #999;
+    padding: 15px 10px;
+}
+
+.result-box ul li {
+    list-style-type: none;
+    border-radius: 3px;
+    padding: 15px 10px;
+    cursor: pointer;
+}
+
+.result-box ul li:hover {
+    background: #e9f3ff;
 }

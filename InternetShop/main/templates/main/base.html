@@ -17,6 +17,8 @@
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="{% static 'main/js/script.js' %}" defer></script>
     <script src="{% static 'main/js/base.js' %}" defer></script>
+    <script src="{% static 'main/js/search.js' %}" defer></script>
+    <!-- <script src="{% static 'main/js/script-cart.js' %}" defer></script> -->
     {% block links %}
     {% endblock %}
 </head>
@@ -37,11 +39,17 @@
                     <img src="{% static 'main/img/catalog-header.png' %}" width="32px" alt="">
                     <p class="montserrat-14 padding-margin-0">Каталог</p>
                 </button>
-                <form class="d-flex search-header" id="header-search" role="search">
-                    <input class="form-control border-radius-search-header" type="search" placeholder="Я шукаю...">
-                    <button class="btn btn-search" type="submit">Знайти</button>
+                <form class="d-flex flex-column search-header" id="header-search" role="search">
+                    <input type="hidden" id="data-get-products-url"
+                        data-get-products-url="{% url 'get_product_names' %}">
+                    <div class="search-box d-flex">
+                        <input class="form-control border-radius-search-header" id="search-header" type="search"
+                            placeholder="Я шукаю...">
+                        <button class="btn btn-search" type="submit">Знайти</button>
+                    </div>
+                    <div style="display: none;" class="result-box">
+                    </div>
                 </form>
-
                 {% if user.is_authenticated %}
                 <a href="{% url 'Info' %}">
                     <img src="{% static 'main/img/logged-user.png' %}" alt="">
@@ -139,7 +147,7 @@
                         <h1 class="h1 padding-margin-0">Пошук</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none burger-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBacket"
+                <a class="text-decoration-none burger-item" data-bs-toggle="modal" data-bs-target="#backetModal"
                     href="#">
                     <div class="container d-flex align-items-center gap-15">
                         <img class="burger-img" src="{% static 'main/img/burger-bucket.svg' %}" alt="">
@@ -152,7 +160,7 @@
                         <h1 class="h1 padding-margin-0">Реєстрація/Вхід</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none burger-item" href="{% url 'About' %}">
+                <a class="text-decoration-none burger-item" href="">
                     <div class="container d-flex align-items-center gap-15">
                         <img class="burger-img" src="{% static 'main/img/user.svg' %}" alt="">
                         <h1 class="h1 padding-margin-0">Про нас/Контакти</h1>
@@ -215,9 +223,10 @@
             {% include 'main/cart_items.html' %}
         </div>
         <div class='offcanvas-footer d-flex justify-content-center flex-column align-items-center py-2'>
-            <h2 class="cart-footer-price montserrat-16">Разом 4400 грн.</h2>
-            <button type='button' class='btn btn-primary h1' style='width: 350px; height: 50px;'>Оформити
-                замовлення</button>
+            <h2 class="cart-footer-price montserrat-16"></h2>
+            <a href="{% url 'checkout' %}"><button type='button' class='btn btn-primary h1'
+                    style='width: 350px; height: 50px;'>Оформити
+                    замовлення</button></a>
         </div>
     </div>
 </body>

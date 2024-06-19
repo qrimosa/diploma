@@ -142,3 +142,19 @@ def categories(request, category):
         html = render_to_string('main/categories_filter.html', {'products': products})
         return JsonResponse({"html":html})
     return render(request, 'main/categories.html', context)
+
+def get_product_names(request):
+    return JsonResponse(list(Product.objects.all().values('name', 'slug')), safe=False)
+
+def checkout(request):
+    session_key = request.session.session_key
+    products_in_cart = ProductInCart.objects.filter(session_key = session_key)
+    sum_in_cart = 0
+    for product in products_in_cart:
+        sum_in_cart += product.product.price*product.amount
+    context = {'products_in_cart':products_in_cart,'sum_in_cart':sum_in_cart}
+    if products_in_cart.exists():
+        pass
+    else:
+        return redirect('main')
+    return render(request,'main/checkout.html', context)
