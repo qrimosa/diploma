@@ -2,15 +2,29 @@ $(document).ready(() => {
     $('.minus').click(function () {
         let id = $(this).data('id');
         let $input = $('.count[data-id="' + id + '"]');
+        let total = 0
         if ($input.val() > 1) {
             $input.val(Number($input.val()) - 1);
         }
-
+        $('.item-backet').each(function () {
+            let price = parseInt($(this).find('.product-price').text())
+            let count = $(this).find('.count').val()
+            total += price * count
+        })
+        $('.cart-footer-price').text(`Разом: ${total} грн`);
+        
     });
     $('.plus').click(function () {
         let id = $(this).data('id');
         let $input = $('.count[data-id="' + id + '"]');
         $input.val(Number($input.val()) + 1);
+        let total = 0
+        $('.item-backet').each(function () {
+            let price = parseInt($(this).find('.product-price').text())
+            let count = $(this).find('.count').val()
+            total += price * count
+        })
+        $('.cart-footer-price').text(`Разом: ${total} грн`);
     });
     $('.delete-item-from-cart').click(function () {
         var cartUrl = $('.delete-item-from-cart').data('cart-url');

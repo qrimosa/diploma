@@ -139,7 +139,7 @@
                         <h1 class="h1 padding-margin-0">Пошук</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none burger-item" data-bs-toggle="modal" data-bs-target="#backetModal"
+                <a class="text-decoration-none burger-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBacket"
                     href="#">
                     <div class="container d-flex align-items-center gap-15">
                         <img class="burger-img" src="{% static 'main/img/burger-bucket.svg' %}" alt="">
@@ -152,7 +152,7 @@
                         <h1 class="h1 padding-margin-0">Реєстрація/Вхід</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none burger-item" href="">
+                <a class="text-decoration-none burger-item" href="{% url 'About' %}">
                     <div class="container d-flex align-items-center gap-15">
                         <img class="burger-img" src="{% static 'main/img/user.svg' %}" alt="">
                         <h1 class="h1 padding-margin-0">Про нас/Контакти</h1>
