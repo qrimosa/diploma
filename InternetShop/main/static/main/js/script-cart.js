@@ -12,9 +12,9 @@ $(document).ready(() => {
             total += price * count
         })
         $('.cart-footer-price').text(`Разом: ${total} грн`);
-        
     });
     $('.plus').click(function () {
+        console.log(222222)
         let id = $(this).data('id');
         let $input = $('.count[data-id="' + id + '"]');
         $input.val(Number($input.val()) + 1);

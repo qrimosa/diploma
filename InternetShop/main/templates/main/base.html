@@ -26,7 +26,7 @@
 <body>
     <header class='z-3 position-fixed top-0 start-50 translate-middle-x w-100'>
         <nav class="navbar bg-header">
-            <div class="container">
+            <div class="container d-flex justify-content-between">
                 <a href="#" class="buttons-header">
                     <img src="{% static 'main/img/burger.png' %}" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasNavbar" width="40px" alt="">
@@ -147,7 +147,7 @@
                         <h1 class="h1 padding-margin-0">Пошук</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none burger-item" data-bs-toggle="modal" data-bs-target="#backetModal"
+                <a class="text-decoration-none burger-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBacket"
                     href="#">
                     <div class="container d-flex align-items-center gap-15">
                         <img class="burger-img" src="{% static 'main/img/burger-bucket.svg' %}" alt="">
@@ -160,7 +160,7 @@
                         <h1 class="h1 padding-margin-0">Реєстрація/Вхід</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none burger-item" href="">
+                <a class="text-decoration-none burger-item" href="{% url 'About' %}">
                     <div class="container d-flex align-items-center gap-15">
                         <img class="burger-img" src="{% static 'main/img/user.svg' %}" alt="">
                         <h1 class="h1 padding-margin-0">Про нас/Контакти</h1>
@@ -178,7 +178,7 @@
                         class="container width-100 category-name">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0">{{category.name}}</p>
+                                <p class="h1 padding-margin-0" >{{category.name}}</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
