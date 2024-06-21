@@ -368,3 +368,24 @@ input[type='range']::-webkit-slider-thumb {
     background: #e9f3ff;
 }
 
+@media (max-width: 768px) {
+    header #backet-header{
+        display: none;
+    }
+    #cataloghead{
+        display: none;
+    }
+    #carouselExampleIndicators{
+        width: auto;
+        height: fit-content;
+    }
+    .under-slider{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #carouselExampleIndicators .carousel-indicators{
+        display: none;
+    }
+}

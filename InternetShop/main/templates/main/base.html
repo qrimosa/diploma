@@ -22,11 +22,11 @@
     {% block links %}
     {% endblock %}
 </head>
-
+<!-- z-3 position-fixed top-0 start-50 translate-middle-x w-100 -->
 <body>
     <header class='z-3 position-fixed top-0 start-50 translate-middle-x w-100'>
         <nav class="navbar bg-header">
-            <div class="container d-flex justify-content-between">
+            <div class="container header-content d-flex justify-content-between align-items-center">
                 <a href="#" class="buttons-header">
                     <img src="{% static 'main/img/burger.png' %}" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasNavbar" width="40px" alt="">
@@ -34,7 +34,7 @@
                 <a href="{% url 'main' %}">
                     <img src="{% static 'main/img/logo.png' %}" width="145px" alt="">
                 </a>
-                <button data-bs-toggle="modal" data-bs-target="#catalogModal" type="button"
+                <button data-bs-toggle="modal" data-bs-target="#catalogModal" id="cataloghead" type="button"
                     class="btn align-items-center btn-secondary d-flex gap-15">
                     <img src="{% static 'main/img/catalog-header.png' %}" width="32px" alt="">
                     <p class="montserrat-14 padding-margin-0">Каталог</p>
