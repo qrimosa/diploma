@@ -37,18 +37,19 @@
 </div>
 <div class="under-slider">
     {% for product in all_products %}
-        {% if forloop.counter <= 12 %}
-        <div class="card" data-price="{{product.price}}" style="width: 18rem;">
+    {% if forloop.counter <= 12 %} <div class="card" data-price="{{product.price}}" style="width: 18rem;">
+        <div class="card-item-img">
             <img src="{{product.image.url}}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <p class="card-text">{{product.name}}</p>
-                <div class="d-flex card-under-slider">
-                    <h1 class="h1">{{product.price}} грн.</h1>
-                    <a href="{% url 'product' product.slug %}" class="btn btn-primary montserrat-14">Детальніше</a>
-                </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{product.name}}</p>
+            <div class="d-flex card-under-slider">
+                <h1 class="h1">{{product.price}} грн.</h1>
+                <a href="{% url 'product' product.slug %}" class="btn btn-primary montserrat-14">Детальніше</a>
             </div>
         </div>
-        {% endif %}
-    {% endfor %}
+</div>
+{% endif %}
+{% endfor %}
 </div>
 {% endblock %}

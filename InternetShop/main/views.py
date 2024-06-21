@@ -6,7 +6,8 @@ from django.db.utils import IntegrityError
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from .models import *
-
+import requests
+from datetime import datetime
 # Create your views here.
 def main(request: HttpResponse):
     context = {"all_products": Product.objects.all()}
@@ -86,6 +87,8 @@ def cart(request):
                 product.save()
             except:
                 product = ProductInCart.objects.create(product_id=product_id,session_key=session_key, amount = 1)
+            cart_count = ProductInCart.objects.filter(session_key=session_key).count()
+            return JsonResponse({'cart_count': cart_count})
         # productsincart = ProductInCart.objects.filter(session_key=session_key)
     return render(request, "main/product.html", context=context)
 
@@ -111,7 +114,8 @@ def cart_view(request):
         'incartproduct': productsincart,
     }
     html = render_to_string('main/cart_items.html', context)
-    return JsonResponse({"html":html})
+    cart_count = ProductInCart.objects.filter(session_key=session_key).count()
+    return JsonResponse({"html":html, 'cart_count':cart_count})
 
 def cart_remove(request):
     context = {}
@@ -157,4 +161,51 @@ def checkout(request):
         pass
     else:
         return redirect('main')
+    if request.method == 'POST':
+        url = 'https://api.novaposhta.ua/v2.0/json/'
+        api_key = ''
+        headers = {
+            'Content-Type': 'application/json',
+            'charset': 'UTF-8'
+        }
+        data = {
+        "apiKey": api_key,
+        "modelName": "InternetDocument",
+        "calledMethod": "save",
+        "methodProperties": {
+            "CitySender": "db5c88f0-391c-11dd-90d9-001a92567626",
+            "Sender": "",
+            "SenderAddress": "0d545f59-e1c2-11e3-8c4a-0050568002cf",
+            "ContactSender": "",
+            "SendersPhone": "380501234567",
+            "RecipientWarehouseRef": " 5a39e553-e1c2-11e3-8c4a-0050568002cf",
+            "RecipientType": "PrivatePerson",
+            "RecipientName": "Петро Іванович Петров",
+            "RecipientContactName": "Петро Іванович Петров",
+            "RecipientsPhone": "380991234567",
+            "NewAddress": "1",
+            "DateTime": datetime.now().strftime('%d.%m.%Y'),
+            "PayerType": "Sender",
+            "PaymentMethod": "Cash",
+            "CargoType": "Parcel",
+            "VolumeGeneral": "0,02",
+            "Weight": "5",
+            "ServiceType": "WarehouseWarehouse",
+            "InfoRegClientBarcodes": "",
+            "SeatsAmount": "1",
+            "Description": "Техніка",
+            "AdditionalInformation": "",
+            "Cost": "100",
+            "AfterpaymentOnGoodsCost": "100"
+            }
+        }
+        response = requests.post(url, json=data, headers=headers)
+        response_data = response.json()
+        if response_data['success']:
+            print(response_data)
+            return HttpResponse("Order created successfully!")
+        else:
+            error_message = response_data['errors']
+            print(response_data)
+            return HttpResponse(f"Failed to create order: {error_message}")
     return render(request,'main/checkout.html', context)

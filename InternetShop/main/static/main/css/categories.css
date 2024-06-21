@@ -1,0 +1,7 @@
+.card-item-img {
+    width: 290px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

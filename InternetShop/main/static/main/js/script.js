@@ -1,8 +1,12 @@
 $(document).ready(() => {
+    console.log(Number($('.incartproduct-amount').text()))
+    if (Number($('.incartproduct-amount').text()) != 0) {
+        $('.incartproduct-amount').removeClass('d-none')
+    }
     $('#btn-register').click(() => {
-        var cartUrl = $('#btn-register').data('cart-url');
+        var url = $('#btn-register').data('cart-url');
         $.ajax({
-            url: cartUrl,
+            url: url,
             type: 'POST',
             data: {
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
@@ -26,9 +30,9 @@ $(document).ready(() => {
         })
     })
     $('#btn-auth').click(() => {
-        var cartUrl = $('#btn-auth').data('cart-url');
+        var url = $('#btn-auth').data('cart-url');
         $.ajax({
-            url: cartUrl,
+            url: url,
             type: 'POST',
             data: {
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
@@ -41,7 +45,8 @@ $(document).ready(() => {
                     $('.hello-user-login').text(`Вітаємо, ${response.username}!`)
                     $('input[name=username]').val('')
                     $('input[name=loginPassword]').val('')
-                    // window.location = "auth"
+                    $('.auth-link').removeClass('d-none');
+                    $('.login-button').addClass('d-none');
                 }
                 if (response.error) {
                     $('.login-error').text(response.error)
@@ -55,10 +60,24 @@ $(document).ready(() => {
         $('.hello-user-login').text('')
         $('.login-error').text('')
     })
-
+    $('.add-cart').click(function () {
+        var cartUrl = $(this).data('cart-url')
+        $.ajax({
+            url: cartUrl,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                product_id: $(this).closest('.card').find('input[name=product_id]').val(),
+            },
+            success: function (data) {
+                $('.badge').removeClass('d-none')
+                $('.badge').text(data.cart_count)
+            }
+        })
+    })
     $('#add-cart').click(() => {
-        var cartUrl = $('#add-cart').data('cart-url');
-        var cartviewUrl = $('#add-cart').data('cart-view-url');
+        var cartUrl = $('#add-cart').data('cart-url')
+        var cartviewUrl = $('#add-cart').data('cart-view-url')
         $.ajax({
             url: cartUrl,
             type: 'POST',
@@ -66,6 +85,10 @@ $(document).ready(() => {
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                 product_id: $("input[name=product_id]").val(),
             },
+            success: function (data) {
+                $('.badge').removeClass('d-none')
+                $('.badge').text(data.cart_count)
+            }
         })
         // $.ajax({
         //     url: cartviewUrl,
@@ -81,7 +104,7 @@ $(document).ready(() => {
         // })
     })
     $('#backet-header').click(() => {
-        var cartviewUrl = $('#backet-header').data('cart-url');
+        var cartviewUrl = $('#backet-header').data('cart-url')
         $.ajax({
             url: cartviewUrl,
             type: 'POST',
@@ -99,12 +122,12 @@ $(document).ready(() => {
                     let count = $(this).find('.count').val()
                     total += price * count
                 })
-                $('.cart-footer-price').text(`Разом: ${total} грн`);
+                $('.cart-footer-price').text(`Разом: ${total} грн`)
             }
         })
     })
     $('.category-name').hover(function () {
-        var categoryId = $(this).data('category-id');
+        var categoryId = $(this).data('category-id')
         var categoryImage = $(`.category-image-${categoryId}`)
         // categoryImage.show()
         categoryImage.removeClass('d-none')
@@ -119,7 +142,7 @@ $(document).ready(() => {
         maxPrice = ($('#max-price-slider').val())
         colors = []
         $('input[name="colors-filter"]:checked').each(function () {
-            colors.push($(this).attr('id'));
+            colors.push($(this).attr('id'))
         })
 
         $.ajax({
@@ -136,7 +159,7 @@ $(document).ready(() => {
                 if (colors.length > 0) {
                     newUrl += '&colors=' + colors.join(',')
                 }
-                history.pushState({}, '', newUrl);
+                history.pushState({}, '', newUrl)
             }
         })
     }
@@ -144,11 +167,11 @@ $(document).ready(() => {
     let priceGap = 0;
     function updateProgress() {
         let minVal = parseInt($(".range-input input:eq(0)").val()),
-            maxVal = parseInt($(".range-input input:eq(1)").val());
+            maxVal = parseInt($(".range-input input:eq(1)").val())
         let minRange = parseInt($("#min-price-slider").attr("min")),
-            maxRange = parseInt($("#max-price-slider").attr("max"));
-        let leftValue = ((minVal - minRange) / (maxRange - minRange)) * 100 + "%";
-        let rightValue = ((maxRange - maxVal) / (maxRange - minRange)) * 100 + "%";
+            maxRange = parseInt($("#max-price-slider").attr("max"))
+        let leftValue = ((minVal - minRange) / (maxRange - minRange)) * 100 + "%"
+        let rightValue = ((maxRange - maxVal) / (maxRange - minRange)) * 100 + "%"
         $(".progress").css({
             "left": leftValue,
             "right": rightValue
@@ -160,15 +183,15 @@ $(document).ready(() => {
     $(".price-input input").each(function (index, input) {
         $(input).on("input", function (e) {
             let minPrice = parseInt($(".price-input input:eq(0)").val()),
-                maxPrice = parseInt($(".price-input input:eq(1)").val());
+                maxPrice = parseInt($(".price-input input:eq(1)").val())
 
             if ((maxPrice - minPrice >= priceGap) && maxPrice <= $("#max-price-slider").attr("max")) {
                 if ($(this).hasClass("input-min")) {
-                    $("#min-price-slider").val(minPrice);
-                    updateProgress();
+                    $("#min-price-slider").val(minPrice)
+                    updateProgress()
                 } else {
-                    $("#max-price-slider").val(maxPrice);
-                    updateProgress();
+                    $("#max-price-slider").val(maxPrice)
+                    updateProgress()
                 }
             }
         });
@@ -176,13 +199,13 @@ $(document).ready(() => {
     $(".range-input input").each(function (index, input) {
         $(input).on("input", function (e) {
             let minVal = parseInt($(".range-input input:eq(0)").val()),
-                maxVal = parseInt($(".range-input input:eq(1)").val());
+                maxVal = parseInt($(".range-input input:eq(1)").val())
             if ((maxVal - minVal) < priceGap) {
                 if ($(this).hasClass("range-min")) {
-                    $(".range-input input:eq(0)").val(maxVal - priceGap);
+                    $(".range-input input:eq(0)").val(maxVal - priceGap)
                     updateProgress();
                 } else {
-                    $(".range-input input:eq(1)").val(minVal + priceGap);
+                    $(".range-input input:eq(1)").val(minVal + priceGap)
                     updateProgress();
                 }
             } else {

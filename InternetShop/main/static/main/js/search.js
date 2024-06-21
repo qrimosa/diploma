@@ -35,7 +35,6 @@ $(document).ready(() => {
         method: 'GET',
         success: function (data) {
             availableProducts = data
-            console.log(availableProducts)
         }
     });
 })

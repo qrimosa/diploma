@@ -41,7 +41,10 @@
         <hr>
         {% endfor %}
         <h2 class="cart-footer-price">Разом: {{sum_in_cart}} грн</h2>
-        <button type='button' class='btn btn-primary h1' >Сплатити</button>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <button class='btn btn-primary h1'>Сплатити</button>
+        </form>
     </div>
 </div>
 {% endblock %}
