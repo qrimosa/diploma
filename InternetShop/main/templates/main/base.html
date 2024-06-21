@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'main/css/categories.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -50,19 +51,20 @@
                     <div style="display: none;" class="result-box">
                     </div>
                 </form>
-                {% if user.is_authenticated %}
-                <a href="{% url 'Info' %}">
+                <a class="auth-link d-none" href="{% url 'Info' %}">
                     <img src="{% static 'main/img/logged-user.png' %}" alt="">
                 </a>
-                {% else %}
-                <a href="#" class="buttons-header" data-bs-toggle="modal" data-bs-target="#regModal">
+                <a class="login-button" href="#" class="buttons-header" data-bs-toggle="modal" data-bs-target="#regModal">
                     <img src="{% static 'main/img/auth.png' %}" width="40px" alt="">
                 </a>
-                {% endif %}
                 {% csrf_token %}
                 <a href="#" id="backet-header" data-cart-url="{% url 'cart_view' %}" class="buttons-header">
-                    <img src="{% static 'main/img/backet.png' %}" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasBacket" width="40px" alt="">
+                    <div class="position-relative">
+                        <img src="{% static 'main/img/backet.png' %}" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasBacket" width="40px" alt="">
+                        <span
+                            class="incartproduct-amount badge d-none bg-danger position-absolute top-0 start-100 translate-middle">{{incartproductamount}}</span>
+                    </div>
                 </a>
             </div>
         </nav>
@@ -178,7 +180,7 @@
                         class="container width-100 category-name">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0" >{{category.name}}</p>
+                                <p class="h1 padding-margin-0">{{category.name}}</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">

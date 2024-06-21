@@ -47,6 +47,12 @@ $(document).ready(() => {
                     },
                     success: (data) => {
                         // console.log(data.html)
+                        if (data.cart_count == 0) {
+                            $('.badge').addClass('d-none')
+                        }
+                        else {
+                            $('.badge').text(data.cart_count)
+                        }
                         $('.cart-wrap').html(data.html);
                         let total = 0;
                         $('.item-backet').each(function () {

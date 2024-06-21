@@ -1,12 +1,23 @@
 {% load static %}
+<link rel="stylesheet" href="{% static 'main/css/categories.css' %}">
 {% for product in products %}
 <div class="card" data-price="{{product.price}}" style="width: 18rem;">
-    <img src="{{product.image.url}}" class="card-img-top" alt="...">
+    <input type="hidden" name="product_id" value="{{product.id}}">
+    <a href="{% url 'product' product.slug %}">
+        <div class="card-item-img">
+            <img src="{{product.image.url}}" class="card-img-top" alt="...">
+        </div>
+    </a>
     <div class="card-body">
         <p class="card-text">{{product.name}}</p>
         <div class="d-flex card-under-slider">
             <h1 class="h1">{{product.price}} грн.</h1>
-            <a href="{% url 'product' product.slug %}" class="btn btn-primary montserrat-14">Детальніше</a>
+            <a class="add-cart" data-cart-url="{% url 'cart' %}" href="#">
+                <div>
+                    <img width="40px" src="{% static 'main/img/cart-add.svg' %}" alt="">
+                </div>
+            </a>
+            <!-- <a href="{% url 'product' product.slug %}" class="btn btn-primary montserrat-14">Детальніше</a> -->
         </div>
     </div>
 </div>
