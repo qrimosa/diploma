@@ -7,6 +7,27 @@
 
 NetNiche — це проект на Python / Django Framework, створений командою з 4 розробників як випускний іспит для курсу Full Stack Development. NetNiche — це, по суті, онлайн-магазин, написаний з нуля.
 
+## Структура
+```mermaid
+graph TD
+  A[InternetShop] --> B(InternetShop)
+  A[InternetShop] --> C(templates)
+  C(templates) --> M(admin)
+  A[InternetShop] --> D(main)
+  D[main] --> E(static)
+  D(main) --> F(templates)
+  A(InternetShop) --> G(media)
+  E(static) --> H(css)
+  E(static) --> J(js)
+  E(static) --> K(img)
+  F(templates) --> L(main)
+  B(InternetShop) --> N(settings)
+  D(main) --> P(models)
+  P(models) --> Q(category)
+  Q(category) --> R(product)
+  R(product) --> S(ProductInCart)
+  ```
+
 ## Технології
 
 ### Мови програмування
