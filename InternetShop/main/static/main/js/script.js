@@ -1,4 +1,12 @@
 $(document).ready(() => {
+    $('.courier-to-your-address').click(() => {
+        $('.courier-to-your-address-form').removeClass('d-none')
+        $('.pickup-from-nova-poshta-form').addClass('d-none')
+    })
+    $('.pickup-from-nova-poshta').click(() => {
+        $('.courier-to-your-address-form').addClass('d-none')
+        $('.pickup-from-nova-poshta-form').removeClass('d-none')
+    })
     console.log(Number($('.incartproduct-amount').text()))
     if (Number($('.incartproduct-amount').text()) != 0) {
         $('.incartproduct-amount').removeClass('d-none')
