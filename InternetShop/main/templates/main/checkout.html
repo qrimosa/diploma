@@ -1,9 +1,28 @@
 {% include 'main/base.html' %}
 {% load static %}
+<script src="{% static 'main/js/checkout.js' %}" defer></script>
 {% block content %}
 <div class="container">
     <h1 class="text-center">Оформити замовлення</h1>
+    <h2>Ваші контактні дані</h2>
+    <form id="contact-form" class="row g-3 needs-validation" novalidate>
+        <div class="col-md-4">
+            <label for="validationCustom01" class="form-label">Ім'я</label>
+            <input type="text" class="form-control" id="validationCustom01" value="" required>
+            <div class="invalid-feedback">
+                Будь ласка, введіть ваше ім'я.
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="validationCustom02" class="form-label">Прізвище</label>
+            <input type="text" class="form-control" id="validationCustom02" value="" required>
+            <div class="invalid-feedback">
+                Будь ласка, введіть ваше прізвище.
+            </div>
+        </div>
+    </form>
     <div class="row g-3 cart-wrap">
+        <h2>Ваше замовлення</h2>
         {% for product in products_in_cart %}
         <div class="d-flex p-2 bg-white w-100 item-backet" style="width: 18rem;">
             <img src="{{product.product.image.url}}" width="120px" alt="...">
@@ -41,9 +60,61 @@
         <hr>
         {% endfor %}
         <h2 class="cart-footer-price">Разом: {{sum_in_cart}} грн</h2>
-        <form action="" method="POST">
+        <h2>Доставка</h2>
+        <ul id='delivery-form'>
+            <li class="form-check courier-to-your-address">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Кур'єр на вашу адресу
+                </label>
+                <form id="payment-form" class="needs-validation courier-to-your-address-form d-none row g-3" action="">
+                    <div class="col-md-4">
+                        <label for="validationDefault01" class="form-label">Вулиця</label>
+                        <input type="text" class="form-control" id="validationDefault01" value="" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="validationDefault02" class="form-label">Будинок</label>
+                        <input type="text" class="form-control" id="validationDefault02" value="" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="validationDefault02" class="form-label">Квартира</label>
+                        <input type="text" class="form-control" id="validationDefault02" value="" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="validationDefault02" class="form-label">Поверх</label>
+                        <input type="text" class="form-control" id="validationDefault02" value="" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationDefault04" class="form-label">Ліфт</label>
+                        <select class="form-select" id="validationDefault04" required>
+                            <option selected disabled value="">Наявність важкого ліфта</option>
+                            <option>Присутній</option>
+                            <option>Відсутній</option>
+                        </select>
+                    </div>
+                </form>
+            </li>
+            <li class="form-check pickup-from-nova-poshta">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Самовивіз з Нової Пошти
+                </label>
+                <form class="pickup-from-nova-poshta-form d-none" action="">
+                    <div class="col-md-3">
+                        <label for="validationDefault04" class="form-label">Відділення</label>
+                        <select class="form-select" id="validationDefault04" required>
+                            <option selected disabled value="">Виберіть ваше відділення</option>
+                            {% for option in addresses %}
+                            <option value="{{option}}">{{option}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
+            </li>
+        </ul>
+        <form class="needs-validation" action="" method="post" novalidate>
             {% csrf_token %}
-            <button class='btn btn-primary h1'>Сплатити</button>
+            <button class='btn btn-primary h1 checkout-button' type="submit">Сплатити</button>
         </form>
     </div>
 </div>

@@ -1,5 +1,16 @@
 $(document).ready(() => {
-    console.log(Number($('.incartproduct-amount').text()))
+    if (localStorage.getItem('isAuthenticated')) {
+        $('.auth-link').removeClass('d-none');
+        $('.login-button').addClass('d-none');
+    }
+    $('.courier-to-your-address').click(() => {
+        $('.courier-to-your-address-form').removeClass('d-none')
+        $('.pickup-from-nova-poshta-form').addClass('d-none')
+    })
+    $('.pickup-from-nova-poshta').click(() => {
+        $('.courier-to-your-address-form').addClass('d-none')
+        $('.pickup-from-nova-poshta-form').removeClass('d-none')
+    })
     if (Number($('.incartproduct-amount').text()) != 0) {
         $('.incartproduct-amount').removeClass('d-none')
     }
@@ -45,8 +56,9 @@ $(document).ready(() => {
                     $('.hello-user-login').text(`Вітаємо, ${response.username}!`)
                     $('input[name=username]').val('')
                     $('input[name=loginPassword]').val('')
-                    $('.auth-link').removeClass('d-none');
-                    $('.login-button').addClass('d-none');
+                    localStorage.setItem('isAuthenticated', 'true')
+                    $('.auth-link').removeClass('d-none')
+                    $('.login-button').addClass('d-none')
                 }
                 if (response.error) {
                     $('.login-error').text(response.error)
