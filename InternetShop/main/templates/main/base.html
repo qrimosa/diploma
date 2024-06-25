@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>NetNiche</title>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link rel="stylesheet" href="{% static 'main/css/bootstrap.css' %}">
     <!-- <script src="{% static 'main/js/bootstrap.js' %}"></script> -->
@@ -35,22 +35,26 @@
                 <a href="{% url 'main' %}">
                     <img src="{% static 'main/img/logo.png' %}" width="145px" alt="">
                 </a>
-                <button data-bs-toggle="modal" data-bs-target="#catalogModal" id="cataloghead" type="button"
-                    class="btn align-items-center btn-secondary d-flex gap-15">
-                    <img src="{% static 'main/img/catalog-header.png' %}" width="32px" alt="">
-                    <p class="montserrat-14 padding-margin-0">Каталог</p>
-                </button>
-                <form class="d-flex flex-column search-header" id="header-search" role="search">
-                    <input type="hidden" id="data-get-products-url"
-                        data-get-products-url="{% url 'get_product_names' %}">
-                    <div class="search-box d-flex">
-                        <input class="form-control border-radius-search-header" id="search-header" type="search"
-                            placeholder="Я шукаю...">
-                        <button class="btn btn-search" type="submit">Знайти</button>
-                    </div>
-                    <div style="display: none;" class="result-box">
-                    </div>
-                </form>
+                <div class="catalog-head">
+                    <button data-bs-toggle="modal" data-bs-target="#catalogModal" type="button"
+                        class="btn align-items-center btn-secondary d-flex gap-15">
+                        <img src="{% static 'main/img/catalog-header.png' %}" width="32px" alt="">
+                        <p class="montserrat-14 padding-margin-0">Каталог</p>
+                    </button>
+                </div>
+                <div class="search-bar">
+                    <form class="d-flex flex-column search-header" id="header-search" role="search">
+                        <input type="hidden" id="data-get-products-url"
+                            data-get-products-url="{% url 'get_product_names' %}">
+                        <div class="search-box d-flex">
+                            <input class="form-control border-radius-search-header" id="search-header" type="search"
+                                placeholder="Я шукаю...">
+                            <button class="btn btn-search" type="submit">Знайти</button>
+                        </div>
+                        <div style="display: none;" class="result-box">
+                        </div>
+                    </form>
+                </div>
                 <a class="auth-link d-none" href="{% url 'Info' %}">
                     <img src="{% static 'main/img/logged-user.png' %}" alt="">
                 </a>
@@ -127,13 +131,13 @@
         </div>
     </div>
     <div class="container-fluid">
-        <div class="offcanvas offcanvas-start " tabindex="-1" id="offcanvasNavbar"
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header d-flex justify-content-center">
-                <a href="#">
-                    <img src="{% static 'main/img/logo.png' %}" width="250px" alt="">
+            <div class="offcanvas-header d-flex justify-content-around align-items-center padding-0 mx-4">
+                <a href="{% url 'main' %}">
+                    <img src="{% static 'main/img/logo.png' %}" width="150px" alt="">
                 </a>
-                <!-- <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button> -->
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body d-flex flex-column gap-15">
                 <a data-bs-toggle="modal" data-bs-target="#catalogModal" class="text-decoration-none mt-2 burger-item"
@@ -180,7 +184,7 @@
                         class="container width-100 category-name">
                         <div class="row align-items-center">
                             <div class="col">
-                                <p class="h1 padding-margin-0">{{category.name}}</p>
+                                <p class="h1 padding-margin-0 text-decoration-none">{{category.name}}</p>
                             </div>
                             <div class="col-auto">
                                 <img src="{% static 'main/img/right-arrow.svg' %}" alt="">

@@ -3,8 +3,8 @@
 <script src="{% static 'main/js/checkout.js' %}" defer></script>
 {% block content %}
 <div class="container">
-    <h1 class="text-center">Оформити замовлення</h1>
-    <h2>Ваші контактні дані</h2>
+    <h1 class="text-center" style = 'font-family: "Montserrat";'>Оформити замовлення</h1>
+    <h2 class = 'h1 mt-5'>Ваші контактні дані</h2>
     <form id="contact-form" class="row g-3 needs-validation" novalidate>
         <div class="col-md-4">
             <label for="validationCustom01" class="form-label">Ім'я</label>
@@ -21,8 +21,8 @@
             </div>
         </div>
     </form>
-    <div class="row g-3 cart-wrap">
-        <h2>Ваше замовлення</h2>
+    <div class="row g-3 cart-wrap mt-3">
+        <h2 class = 'h1'>Ваше замовлення</h2>
         {% for product in products_in_cart %}
         <div class="d-flex p-2 bg-white w-100 item-backet" style="width: 18rem;">
             <img src="{{product.product.image.url}}" width="120px" alt="...">
@@ -59,7 +59,7 @@
         </div>
         <hr>
         {% endfor %}
-        <h2 class="cart-footer-price">Разом: {{sum_in_cart}} грн</h2>
+        <h2 class="cart-footer-price" style="font-family: 'Montserrat'; font-size: 25px; font-weight: 700;">Разом: {{sum_in_cart}} грн</h2>
         <h2>Доставка</h2>
         <ul id='delivery-form'>
             <li class="form-check courier-to-your-address">

@@ -182,6 +182,14 @@ main {
 
 }
 
+.card{
+    width: 18rem;
+}
+
+/* .card-category{
+    width: 18rem;
+} */
+
 .count::-webkit-outer-spin-button,
 .count::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -268,6 +276,10 @@ input[type='number']::-webkit-inner-spin-button {
     justify-content: center;
 }
 
+.img img{
+    width: 500px;
+}
+
 .range-input {
     position: relative;
 }
@@ -333,6 +345,10 @@ input[type='range']::-webkit-slider-thumb {
     max-height: 0;
 }
 
+.button-filter{
+    display: none;
+}
+
 .burger-item {
     transition: text-decoration 0.3s ease;
 }
@@ -350,6 +366,10 @@ input[type='range']::-webkit-slider-thumb {
     border-radius: 0 0 3px 3px;
     background-color: #fff;
     overflow: hidden
+}
+.category-page{
+    display: flex;
+    flex-direction: row;
 }
 
 .result-box ul {
@@ -369,12 +389,20 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 @media (max-width: 768px) {
-    header #backet-header{
+    .auth-link{
         display: none;
     }
-    #cataloghead{
+    .catalog-head{
         display: none;
     }
+    .search-bar{
+        display: none;
+    }
+    .category-page{
+        display: flex;
+        flex-direction: column;
+    }
+
     #carouselExampleIndicators{
         width: auto;
         height: fit-content;
@@ -387,5 +415,42 @@ input[type='range']::-webkit-slider-thumb {
     }
     #carouselExampleIndicators .carousel-indicators{
         display: none;
+    }
+    .filters{
+        display: none;
+    }
+    .button-filter{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .card img{
+        width: 100%;
+    }
+    .card{
+        width: 11rem;
+        height: 380px;
+    }
+    .under-slider {
+        display: grid;
+        grid-template-columns: repeat(auto-fill , 10rem);
+        grid-row-gap: 40px;
+        grid-column-gap: 30px;
+        justify-content: center;
+    }
+    .card-under-slider{
+        display: flex;
+        flex-direction: column;
+    }
+    .container-product{
+        display: flex;
+        flex-direction: column;
+    }
+    .img img{
+        width: 300px;
+    }
+    .card-category .card-item-img{
+        width: 100%;
+        height: 100%;
     }
 }

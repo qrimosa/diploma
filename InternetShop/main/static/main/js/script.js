@@ -79,7 +79,7 @@ $(document).ready(() => {
             type: 'POST',
             data: {
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                product_id: $(this).closest('.card').find('input[name=product_id]').val(),
+                product_id: $(this).closest('.card-category').find('input[name=product_id]').val(),
             },
             success: function (data) {
                 $('.badge').removeClass('d-none')

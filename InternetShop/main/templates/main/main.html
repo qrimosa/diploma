@@ -1,7 +1,7 @@
 {% include 'main/base.html' %}
 {% load static %}
 {% block content %}
-<div id="carouselExampleIndicators" class="carousel slide main-carousel" data-bs-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide main-carousel border border-3 border-black rounded-5" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
             aria-current="true" aria-label="Slide 1"></button>
@@ -33,16 +33,17 @@
     </button>
 </div>
 <div class="text-under-slider">
-    <h1>Новинки🔥</h1>
+    <h1 style="font-family: 'Montserrat'; font-weight: 1000;">Новинки🔥</h1>
 </div>
-<div class="under-slider">
+<div class="under-slider padding-margin-0">
     {% for product in all_products %}
-    {% if forloop.counter <= 12 %} <div class="card" data-price="{{product.price}}" style="width: 18rem;">
-        <div class="card-item-img">
+    {% if forloop.counter <= 12 %} 
+    <div class="card border border-black border-opacity-50 border-2 rounded-2" data-price="{{product.price}}">
+        <div class="card-item-img w-100">
             <img src="{{product.image.url}}" class="card-img-top" alt="...">
         </div>
         <div class="card-body">
-            <p class="card-text">{{product.name}}</p>
+            <p class="card-text h2">{{product.name}}</p>
             <div class="d-flex card-under-slider">
                 <h1 class="h1">{{product.price}} грн.</h1>
                 <a href="{% url 'product' product.slug %}" class="btn btn-primary montserrat-14">Детальніше</a>

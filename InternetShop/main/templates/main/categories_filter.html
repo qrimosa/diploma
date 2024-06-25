@@ -1,15 +1,15 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'main/css/categories.css' %}">
 {% for product in products %}
-<div class="card" data-price="{{product.price}}" style="width: 18rem;">
+<div class="card-category padding-margin-0 d-flex justify-content-center align-items-center flex-column" data-price="{{product.price}}">
     <input type="hidden" name="product_id" value="{{product.id}}">
     <a href="{% url 'product' product.slug %}">
-        <div class="card-item-img">
+        <div class="card-item-img ">
             <img src="{{product.image.url}}" class="card-img-top" alt="...">
         </div>
     </a>
     <div class="card-body">
-        <p class="card-text">{{product.name}}</p>
+        <p class="card-text h2">{{product.name}}</p>
         <div class="d-flex card-under-slider">
             <h1 class="h1">{{product.price}} грн.</h1>
             <a class="add-cart" data-cart-url="{% url 'cart' %}" href="#">
