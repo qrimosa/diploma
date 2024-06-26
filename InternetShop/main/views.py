@@ -6,7 +6,9 @@ from django.db.utils import IntegrityError
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from .models import *
+from django.conf import settings
 import requests
+from django.core.mail import send_mail
 # Create your views here.
 def main(request: HttpResponse):
     context = {"all_products": Product.objects.all()}
@@ -168,22 +170,36 @@ def checkout(request):
         pass
     else:
         return redirect('main')
-    api_key = '8112617626b3a78db6c84bcc50a6d102'
-    payload = {
-        "apiKey": api_key,
-        "modelName": "Address",
-        "calledMethod": "getWarehouses",
-        "methodProperties": {
-            "CityName": "Днепр",
-        }
-    }
-    response = requests.post('https://api.novaposhta.ua/v2.0/json/', json=payload)
-    if response.status_code == 200:
-        data = response.json()
-        if data['success']:
-            warehouses = data['data']
-        addresses = [warehouse['Description'] for warehouse in warehouses if warehouse['TypeOfWarehouse']!='f9316480-5f2d-425d-bc2c-ac7cd29decf0']
-        context['addresses'] = addresses
+    # api_key = '8112617626b3a78db6c84bcc50a6d102'
+    # payload = {
+    #     "apiKey": api_key,
+    #     "modelName": "Address",
+    #     "calledMethod": "getWarehouses",
+    #     "methodProperties": {
+    #         "CityName": "Днепр",
+    #     }
+    # }
+    # response = requests.post('https://api.novaposhta.ua/v2.0/json/', json=payload)
+    # if response.status_code == 200:
+    #     data = response.json()
+    #     if data['success']:
+    #         warehouses = data['data']
+    #         addresses = [warehouse['Description'] for warehouse in warehouses if warehouse['TypeOfWarehouse']!='f9316480-5f2d-425d-bc2c-ac7cd29decf0']
+    #         context['addresses'] = addresses
     if request.method == 'POST':
-        pass
+        name = request.POST.get('name')
+        surname = request.POST.get('surname')
+        products = request.POST.getlist('products[]')
+        if name and surname and products:
+            products_in_checkout = ''
+            message = ''
+            for i in products:
+                product = ProductInCart.objects.get(id=i)
+                products_in_checkout+=f'{product.product.name} в кількості {product.amount}\n'
+            message = f'Доброго дня, {name} {surname}, ви замовили: \n{products_in_checkout}\nЦіна за покупку: {sum_in_cart} грн.\nДякуємо вам за покупку!'
+            # print(message)
+            # print(request.user.email)
+            print(send_mail('Доставка одягу', message, settings.EMAIL_HOST_USER, [request.user.email]))
+            result = {'success': True, 'message': 'Операция выполнена успешно!'}
+            return JsonResponse(result)
     return render(request,'main/checkout.html', context)
