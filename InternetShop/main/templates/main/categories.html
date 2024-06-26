@@ -4,9 +4,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock %}
 {% block content %}
-<div class = 'category-page'>
-    <div class="filters">
-        <form id="filters-form" class = 'ms-2 border'>
+<div class='category-page'>
+    <div class="filters desktop-filters" id="desktop-filters">
+        <form id="filters-form" class='ms-2 border'>
             {% csrf_token %}
             <input type="hidden" id="category-url" data-category-url="{% url 'categories' category.slug %}">
             <div class="price-input">
@@ -22,76 +22,117 @@
                 <div class="progress"></div>
             </div>
             <div class="range-input">
-                <input type="range" id="min-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
+                <input type="range" class="min-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
                     value="{{min_price}}">
-                <input type="range" id="max-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
+                <input type="range" class="max-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
                     value="{{max_price}}">
             </div>
-            <div class = 'pt-4'>
+            <div class='pt-4'>
                 <p class="h1">Колір</p>
                 {% for color in colors %}
-                <div class = 'd-flex flex-column'>
-                    <div class = 'd-flex flex-row gap-2'>
+                <div class='d-flex flex-column'>
+                    <div class='d-flex flex-row gap-2 desktop-filters'>
                         <label for="{{color.color}}">{{color.color}}</label>
-                        <input type="checkbox" name="colors-filter" id="{{color.color}}">
-                    </div>    
+                        <input type="checkbox" class="color-filter" name="colors-filter" id="{{color.color}}">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class='pt-4'>
+                <p class="h1">Розмір</p>
+                {% for size in sizes %}
+                <div class='d-flex flex-column'>
+                    <div class='d-flex flex-row gap-2 desktop-filters'>
+                        <label for="{{size.size}}">{{size.size}}</label>
+                        <input type="checkbox" class="size-filter" name="sizes-filter" id="{{size.size}}">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class='pt-4'>
+                <p class="h1">Сезон</p>
+                {% for season in seasons %}
+                <div class='d-flex flex-column'>
+                    <div class='d-flex flex-row gap-2 desktop-filters'>
+                        <label for="{{season.season}}">{{season.season}}</label>
+                        <input type="checkbox" class="season-filter" name="seasons-filter" id="{{season.season}}">
+                    </div>
                 </div>
                 {% endfor %}
             </div>
         </form>
     </div>
-    <div id="products"><button type="button" data-bs-toggle ='offcanvas' data-bs-target = '#offcanvasFilter' 
-        class = 'btn btn-primary button-filter w-100 h1'>Фільтри</button></div>
+    <div id="products"><button type="button" data-bs-toggle='offcanvas' data-bs-target='#offcanvasFilter'
+            class='btn btn-primary button-filter w-100 h1'>Фільтри</button></div>
     <div id="product-list" class="under-slider border w-100">
         {% include 'main/categories_filter.html' %}
     </div>
 </div>
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasFilterLabel">
-        <div class="offcanvas-header">
-            <h3 class="offcanvas-title" id="offcanvasRightLabel">Фільтри</h3>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            <hr>
-        </div>
-        <div class="offcanvas-body d-flex gap-15 flex-column">
-            <div class="filters-offcanvas w-100">
-                <form id="filters-form" class = 'ms-2 border'>
-                    {% csrf_token %}
-                    <input type="hidden" id="category-url" data-category-url="{% url 'categories' category.slug %}">
-                    <div class="price-input">
-                        <div class="field">
-                            <input type="number" class="input-min" value="{{min_price}}">
-                        </div>
-                        <div class="separator">-</div>
-                        <div class="field">
-                            <input type="number" class="input-max" value="{{max_price}}">
-                        </div>
+<div class="offcanvas offcanvas-start mobile-filters" tabindex="-1" id="offcanvasFilter"
+    aria-labelledby="offcanvasFilterLabel">
+    <div class="offcanvas-header">
+        <h3 class="offcanvas-title" id="offcanvasRightLabel">Фільтри</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <hr>
+    </div>
+    <div class="offcanvas-body d-flex gap-15 flex-column">
+        <div class="filters-offcanvas w-100">
+            <form id="filters-form" class='ms-2 border'>
+                {% csrf_token %}
+                <input type="hidden" id="category-url" data-category-url="{% url 'categories' category.slug %}">
+                <div class="price-input">
+                    <div class="field">
+                        <input type="number" class="input-min" value="{{min_price}}">
                     </div>
-                    <div class="slider">
-                        <div class="progress"></div>
+                    <div class="separator">-</div>
+                    <div class="field">
+                        <input type="number" class="input-max" value="{{max_price}}">
                     </div>
-                    <div class="range-input">
-                        <input type="range" id="min-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
-                            value="{{min_price}}">
-                        <input type="range" id="max-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
-                            value="{{max_price}}">
+                </div>
+                <div class="slider">
+                    <div class="progress"></div>
+                </div>
+                <div class="range-input">
+                    <input type="range" class="min-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
+                        value="{{min_price}}">
+                    <input type="range" class="max-price-slider" min="{{min_price}}" max="{{max_price}}" step="10"
+                        value="{{max_price}}">
+                </div>
+                <p class="h1">Колір</p>
+                {% for color in colors %}
+                <div class='d-flex flex-column mt-2'>
+                    <div class='d-flex flex-row gap-2'>
+                        <label for="{{color.color}}">{{color.color}}</label>
+                        <input type="checkbox" class="color-filter" name="colors-filter" id="{{color.color}}">
                     </div>
-                    <p class="h1">Колір</p>
-                    {% for color in colors %}
-                    <div class = 'd-flex flex-column mt-2'>
-                        <div class = 'd-flex flex-row gap-2'>
-                            <label for="{{color.color}}">{{color.color}}</label>
-                            <input type="checkbox" name="colors-filter" id="{{color.color}}">
-                        </div>    
+                </div>
+                {% endfor %}
+                <p class="h1">Розмір</p>
+                {% for size in sizes %}
+                <div class='d-flex flex-column'>
+                    <div class='d-flex flex-row gap-2 desktop-filters'>
+                        <label for="{{size.size}}">{{size.size}}</label>
+                        <input type="checkbox" class="size-filter" name="sizes-filter" id="{{size.size}}">
                     </div>
-                    {% endfor %}
-                </form>
-            </div>
-        </div>
-        <div class='offcanvas-footer d-flex justify-content-center flex-column align-items-center py-2'>
-            <h2 class="cart-footer-price montserrat-16"></h2>
-            <a href="{% url 'checkout' %}"><button type='button' class='btn btn-primary h1'
-                    style='width: 350px; height: 50px;'>Оформити
-                    замовлення</button></a>
+                </div>
+                {% endfor %}
+                <p class="h1">Сезон</p>
+                {% for season in seasons %}
+                <div class='d-flex flex-column'>
+                    <div class='d-flex flex-row gap-2 desktop-filters'>
+                        <label for="{{season.season}}">{{season.season}}</label>
+                        <input type="checkbox" class="season-filter" name="seasons-filter" id="{{season.season}}">
+                    </div>
+                </div>
+                {% endfor %}
+            </form>
         </div>
     </div>
+    <div class='offcanvas-footer d-flex justify-content-center flex-column align-items-center py-2'>
+        <h2 class="cart-footer-price montserrat-16"></h2>
+        <a href="{% url 'checkout' %}"><button type='button' class='btn btn-primary h1'
+                style='width: 350px; height: 50px;'>Оформити
+                замовлення</button></a>
+    </div>
+</div>
 {% endblock %}
