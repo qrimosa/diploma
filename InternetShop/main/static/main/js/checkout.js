@@ -25,5 +25,20 @@ $(document).ready(() => {
                 $(paymentForm).addClass('was-validated');
             }
         }
+        url = $('input[name=url-checkout]').data('url')
+        asdflkjasdf = []
+        $('input[name=product_in_cart_id]').each(function () {
+            asdflkjasdf.push($(this).val())
+        })
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                'products[]': asdflkjasdf,
+                name: $('input[name=name]').val(),
+                surname: $('input[name=surname]').val()
+            }
+        })
     });
 })

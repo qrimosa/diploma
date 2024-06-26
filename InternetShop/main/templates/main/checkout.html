@@ -3,26 +3,26 @@
 <script src="{% static 'main/js/checkout.js' %}" defer></script>
 {% block content %}
 <div class="container">
-    <h1 class="text-center" style = 'font-family: "Montserrat";'>Оформити замовлення</h1>
-    <h2 class = 'h1 mt-5'>Ваші контактні дані</h2>
+    <h1 class="text-center" style='font-family: "Montserrat";'>Оформити замовлення</h1>
+    <h2 class='h1 mt-5'>Ваші контактні дані</h2>
     <form id="contact-form" class="row g-3 needs-validation" novalidate>
         <div class="col-md-4">
             <label for="validationCustom01" class="form-label">Ім'я</label>
-            <input type="text" class="form-control" id="validationCustom01" value="" required>
+            <input type="text" name="name" class="form-control" id="validationCustom01" value="" required>
             <div class="invalid-feedback">
                 Будь ласка, введіть ваше ім'я.
             </div>
         </div>
         <div class="col-md-4">
             <label for="validationCustom02" class="form-label">Прізвище</label>
-            <input type="text" class="form-control" id="validationCustom02" value="" required>
+            <input type="text" name="surname" class="form-control" id="validationCustom02" value="" required>
             <div class="invalid-feedback">
                 Будь ласка, введіть ваше прізвище.
             </div>
         </div>
     </form>
     <div class="row g-3 cart-wrap mt-3">
-        <h2 class = 'h1'>Ваше замовлення</h2>
+        <h2 class='h1'>Ваше замовлення</h2>
         {% for product in products_in_cart %}
         <div class="d-flex p-2 bg-white w-100 item-backet" style="width: 18rem;">
             <img src="{{product.product.image.url}}" width="120px" alt="...">
@@ -31,7 +31,7 @@
                     <h5 class="h2">{{product.product.name}}</h5>
                     <form action="" method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name="product_in_cart_id" value="{{product.id}}">
+                        <input type="hidden" name="product_id" value="{{product.product.id}}">
                         <div class="dropdown">
                             <img src="{% static 'main/img/three-dots.svg' %}" data-bs-toggle="dropdown" role='button'
                                 width="30px" alt="">
@@ -59,7 +59,8 @@
         </div>
         <hr>
         {% endfor %}
-        <h2 class="cart-footer-price" style="font-family: 'Montserrat'; font-size: 25px; font-weight: 700;">Разом: {{sum_in_cart}} грн</h2>
+        <h2 class="cart-footer-price" style="font-family: 'Montserrat'; font-size: 25px; font-weight: 700;">Разом:
+            {{sum_in_cart}} грн</h2>
         <h2>Доставка</h2>
         <ul id='delivery-form'>
             <li class="form-check courier-to-your-address">
@@ -112,7 +113,7 @@
                 </form>
             </li>
         </ul>
-        <form class="needs-validation" action="" method="post" novalidate>
+        <form class="needs-validation" action="" method="POST">
             {% csrf_token %}
             <button class='btn btn-primary h1 checkout-button' type="submit">Сплатити</button>
         </form>
