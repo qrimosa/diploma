@@ -135,13 +135,21 @@ def categories(request, category):
     products_list = products_obj.values_list('price')
     min_price = products_list.order_by('price').first()
     max_price = products_list.order_by('price').last()
-    context = {'category': category_obj, 'products':products_obj, 'colors':colors, 'max_price': max_price[0], 'min_price': min_price[0]}
+    sizes = products_obj.values('size').distinct()
+    seasons = products_obj.values('season').distinct()
+    context = {'category': category_obj, 'products':products_obj, 'colors':colors, 'max_price': max_price[0], 'min_price': min_price[0], 'sizes': sizes, 'seasons': seasons}
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         category_obj = Category.objects.get(slug=category)
         products = Product.objects.filter(category = category_obj,price__range=(request.GET.get('min_price'), request.GET.get('max_price')))
         colors = request.GET.getlist('colors[]')
+        sizes = request.GET.getlist('sizes[]')
+        seasons = request.GET.getlist('seasons[]')
         if colors:
             products = products.filter(color__in = colors)
+        if sizes:
+            products = products.filter(size__in = sizes)
+        if seasons:
+            products = products.filter(season__in = seasons)
         html = render_to_string('main/categories_filter.html', {'products': products})
         return JsonResponse({"html":html})
     return render(request, 'main/categories.html', context)
@@ -176,4 +184,6 @@ def checkout(request):
             warehouses = data['data']
         addresses = [warehouse['Description'] for warehouse in warehouses if warehouse['TypeOfWarehouse']!='f9316480-5f2d-425d-bc2c-ac7cd29decf0']
         context['addresses'] = addresses
+    if request.method == 'POST':
+        pass
     return render(request,'main/checkout.html', context)

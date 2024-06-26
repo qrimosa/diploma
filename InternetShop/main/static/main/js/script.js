@@ -149,12 +149,22 @@ $(document).ready(() => {
         categoryImage.addClass('d-none')
     })
     function updatePriceFilter() {
+        let activeForm = $(window).width() <= 768 ? '.mobile-filters' : '.desktop-filters'
         url = $('#category-url').data('category-url')
-        minPrice = ($('#min-price-slider').val())
-        maxPrice = ($('#max-price-slider').val())
+        minPrice = ($(`${activeForm} .min-price-slider`).val())
+        maxPrice = ($(`${activeForm} .max-price-slider`).val())
+        console.log($(`${activeForm} .min-price-slider`))
         colors = []
-        $('input[name="colors-filter"]:checked').each(function () {
+        seasons = []
+        sizes = []
+        $(`${activeForm} .color-filter:checked`).each(function () {
             colors.push($(this).attr('id'))
+        })
+        $(`${activeForm} .size-filter:checked`).each(function () {
+            sizes.push($(this).attr('id'))
+        })
+        $(`${activeForm} .season-filter:checked`).each(function () {
+            seasons.push($(this).attr('id'))
         })
 
         $.ajax({
@@ -164,6 +174,8 @@ $(document).ready(() => {
                 min_price: minPrice,
                 max_price: maxPrice,
                 colors: colors,
+                sizes: sizes,
+                seasons: seasons,
             },
             success: function (data) {
                 $('#product-list').html(data.html);
@@ -171,53 +183,64 @@ $(document).ready(() => {
                 if (colors.length > 0) {
                     newUrl += '&colors=' + colors.join(',')
                 }
+                if (seasons.length > 0) {
+                    newUrl += '&seasons=' + seasons.join(',')
+                }
+                if (sizes.length > 0) {
+                    newUrl += '&sizes=' + sizes.join(',')
+                }
                 history.pushState({}, '', newUrl)
             }
         })
     }
-    $('#min-price-slider, #max-price-slider, input[name="colors-filter"]').on('change', updatePriceFilter);
+    let activeForm = $(window).width() <= 768 ? '.mobile-filters' : '.desktop-filters'
+    $(`${activeForm} .min-price-slider,${activeForm} .max-price-slider,${activeForm} .color-filter,${activeForm} .size-filter,${activeForm} .season-filter`).on('change', updatePriceFilter);
     let priceGap = 0;
     function updateProgress() {
-        let minVal = parseInt($(".range-input input:eq(0)").val()),
-            maxVal = parseInt($(".range-input input:eq(1)").val())
-        let minRange = parseInt($("#min-price-slider").attr("min")),
-            maxRange = parseInt($("#max-price-slider").attr("max"))
+        let activeForm = $(window).width() <= 768 ? '.mobile-filters' : '.desktop-filters'
+        let minVal = parseInt($(`${activeForm} .range-input input:eq(0)`).val()),
+            maxVal = parseInt($(`${activeForm} .range-input input:eq(1)`).val())
+        console.log($(`${activeForm} .range-input input:eq(0)`))
+        let minRange = parseInt($(`${activeForm} .min-price-slider`).attr("min")),
+            maxRange = parseInt($(`${activeForm} .max-price-slider`).attr("max"))
         let leftValue = ((minVal - minRange) / (maxRange - minRange)) * 100 + "%"
         let rightValue = ((maxRange - maxVal) / (maxRange - minRange)) * 100 + "%"
-        $(".progress").css({
+        $(`${activeForm} .progress`).css({
             "left": leftValue,
             "right": rightValue
         });
-        $('.input-min').val(minVal);
-        $('.input-max').val(maxVal);
+        $(`${activeForm} .input-min`).val(minVal);
+        $(`${activeForm} .input-max`).val(maxVal);
     }
     updateProgress();
     $(".price-input input").each(function (index, input) {
+        let activeForm = $(window).width() <= 768 ? '.mobile-filters' : '.desktop-filters'
         $(input).on("input", function (e) {
-            let minPrice = parseInt($(".price-input input:eq(0)").val()),
-                maxPrice = parseInt($(".price-input input:eq(1)").val())
+            let minPrice = parseInt($(`${activeForm} .price-input input:eq(0)`).val()),
+                maxPrice = parseInt($(`${activeForm} .price-input input:eq(1)`).val())
 
-            if ((maxPrice - minPrice >= priceGap) && maxPrice <= $("#max-price-slider").attr("max")) {
+            if ((maxPrice - minPrice >= priceGap) && maxPrice <= $(`${activeForm} .max-price-slider`).attr("max")) {
                 if ($(this).hasClass("input-min")) {
-                    $("#min-price-slider").val(minPrice)
+                    $(`${activeForm} .min-price-slider`).val(minPrice)
                     updateProgress()
                 } else {
-                    $("#max-price-slider").val(maxPrice)
+                    $(`${activeForm} .max-price-slider`).val(maxPrice)
                     updateProgress()
                 }
             }
         });
     });
     $(".range-input input").each(function (index, input) {
+        let activeForm = $(window).width() <= 768 ? '.mobile-filters' : '.desktop-filters'
         $(input).on("input", function (e) {
-            let minVal = parseInt($(".range-input input:eq(0)").val()),
-                maxVal = parseInt($(".range-input input:eq(1)").val())
+            let minVal = parseInt($(`${activeForm} .range-input input:eq(0)`).val()),
+                maxVal = parseInt($(`${activeForm} .range-input input:eq(1)`).val())
             if ((maxVal - minVal) < priceGap) {
                 if ($(this).hasClass("range-min")) {
-                    $(".range-input input:eq(0)").val(maxVal - priceGap)
+                    $(`${activeForm} .range-input input:eq(0)`).val(maxVal - priceGap)
                     updateProgress();
                 } else {
-                    $(".range-input input:eq(1)").val(minVal + priceGap)
+                    $(`${activeForm} .range-input input:eq(1)`).val(minVal + priceGap)
                     updateProgress();
                 }
             } else {
