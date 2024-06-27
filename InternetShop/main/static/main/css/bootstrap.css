@@ -804,7 +804,7 @@ progress {
   margin-left: auto;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 768px) {
 
   .container-sm,
   .container {
@@ -4643,7 +4643,7 @@ fieldset:disabled .btn {
   overflow-y: auto;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 768px) {
   .navbar-expand-sm {
     flex-wrap: nowrap;
     justify-content: flex-start;

@@ -5,6 +5,8 @@ $(document).ready(() => {
     if (localStorage.getItem('isAuthenticated')) {
         $('.auth-link').removeClass('d-none');
         $('.login-button').addClass('d-none');
+        $('.burger-auth').addClass('d-none')
+        $('.burger-profile').removeClass('d-none')
     }
     $('.courier-to-your-address').click(() => {
         $('.courier-to-your-address-form').removeClass('d-none')
@@ -62,6 +64,8 @@ $(document).ready(() => {
                     localStorage.setItem('isAuthenticated', 'true')
                     $('.auth-link').removeClass('d-none')
                     $('.login-button').addClass('d-none')
+                    $('.burger-auth').addClass('d-none')
+                    $('.burger-profile').removeClass('d-none')
                 }
                 if (response.error) {
                     $('.login-error').text(response.error)
