@@ -24,15 +24,16 @@
     {% endblock %}
 </head>
 <!-- z-3 position-fixed top-0 start-50 translate-middle-x w-100 -->
+
 <body>
     <header class='z-3 position-fixed top-0 start-50 translate-middle-x w-100'>
         <nav class="navbar bg-header">
-            <div class="container header-content d-flex justify-content-between align-items-center">
+            <div class="container header-content d-flex justify-content-around align-items-center">
                 <a href="#" class="buttons-header">
                     <img src="{% static 'main/img/burger.png' %}" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasNavbar" width="40px" alt="">
                 </a>
-                <a href="{% url 'main' %}">
+                <a class="logo-header" href="{% url 'main' %}">
                     <img src="{% static 'main/img/logo.png' %}" width="145px" alt="">
                 </a>
                 <div class="catalog-head">
@@ -46,7 +47,7 @@
                     <form class="d-flex flex-column search-header" id="header-search" role="search">
                         <input type="hidden" id="data-get-products-url"
                             data-get-products-url="{% url 'get_product_names' %}">
-                        <div class="search-box d-flex">
+                        <div class="search-box d-flex position-relative">
                             <input class="form-control border-radius-search-header" id="search-header" type="search"
                                 placeholder="Я шукаю...">
                             <button class="btn btn-search" type="submit">Знайти</button>
@@ -58,7 +59,8 @@
                 <a class="auth-link d-none" href="{% url 'Info' %}">
                     <img src="{% static 'main/img/logged-user.png' %}" alt="">
                 </a>
-                <a class="login-button" href="#" class="buttons-header" data-bs-toggle="modal" data-bs-target="#regModal">
+                <a class="login-button" href="#" class="buttons-header" data-bs-toggle="modal"
+                    data-bs-target="#regModal">
                     <img src="{% static 'main/img/auth.png' %}" width="40px" alt="">
                 </a>
                 {% csrf_token %}
@@ -147,12 +149,6 @@
                         <h1 class="h1 padding-margin-0">Каталог товарів</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none burger-item" href="#">
-                    <div class="container d-flex align-items-center gap-15">
-                        <img class="burger-img" src="{% static 'main/img/search.svg' %}" alt="">
-                        <h1 class="h1 padding-margin-0">Пошук</h1>
-                    </div>
-                </a>
                 <a class="text-decoration-none burger-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBacket"
                     href="#">
                     <div class="container d-flex align-items-center gap-15">
@@ -160,16 +156,24 @@
                         <h1 class="h1 padding-margin-0">Кошик</h1>
                     </div>
                 </a>
-                <a class="text-decoration-none burger-item" data-bs-toggle="modal" data-bs-target="#authModel" href="#">
+                <a class="burger-auth text-decoration-none burger-item" data-bs-toggle="modal"
+                    data-bs-target="#authModel" href="#">
                     <div class="container d-flex align-items-center gap-15">
                         <img class="burger-img" src="{% static 'main/img/burger-auth.svg' %}" alt="">
                         <h1 class="h1 padding-margin-0">Реєстрація/Вхід</h1>
                     </div>
                 </a>
+
                 <a class="text-decoration-none burger-item" href="{% url 'About' %}">
                     <div class="container d-flex align-items-center gap-15">
-                        <img class="burger-img" src="{% static 'main/img/user.svg' %}" alt="">
+                        <img class="burger-img" src="{% static 'main/img/burger-auth.svg' %}" alt="">
                         <h1 class="h1 padding-margin-0">Про нас/Контакти</h1>
+                    </div>
+                </a>
+                <a class="burger-profile text-decoration-none burger-item d-none" href="{% url 'Info' %}">
+                    <div class="container d-flex align-items-center gap-15">
+                        <img class="burger-img" src="{% static 'main/img/user.svg' %}" alt="">
+                        <h1 class="h1 padding-margin-0">Мій профіль</h1>
                     </div>
                 </a>
             </div>
