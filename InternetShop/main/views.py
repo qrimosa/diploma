@@ -170,33 +170,47 @@ def checkout(request):
         pass
     else:
         return redirect('main')
-    # api_key = '8112617626b3a78db6c84bcc50a6d102'
-    # payload = {
-    #     "apiKey": api_key,
-    #     "modelName": "Address",
-    #     "calledMethod": "getWarehouses",
-    #     "methodProperties": {
-    #         "CityName": "Днепр",
-    #     }
-    # }
-    # response = requests.post('https://api.novaposhta.ua/v2.0/json/', json=payload)
-    # if response.status_code == 200:
-    #     data = response.json()
-    #     if data['success']:
-    #         warehouses = data['data']
-    #         addresses = [warehouse['Description'] for warehouse in warehouses if warehouse['TypeOfWarehouse']!='f9316480-5f2d-425d-bc2c-ac7cd29decf0']
-    #         context['addresses'] = addresses
+    api_key = '8112617626b3a78db6c84bcc50a6d102'
+    payload = {
+        "apiKey": api_key,
+        "modelName": "Address",
+        "calledMethod": "getWarehouses",
+        "methodProperties": {
+            "CityName": "Днепр",
+        }
+    }
+    response = requests.post('https://api.novaposhta.ua/v2.0/json/', json=payload)
+    if response.status_code == 200:
+        data = response.json()
+        if data['success']:
+            warehouses = data['data']
+            addresses = [warehouse['Description'] for warehouse in warehouses if warehouse['TypeOfWarehouse']!='f9316480-5f2d-425d-bc2c-ac7cd29decf0']
+            context['addresses'] = addresses
     if request.method == 'POST':
         name = request.POST.get('name')
         surname = request.POST.get('surname')
         products = request.POST.getlist('products[]')
-        if name and surname and products:
+        sum_in_cart = request.POST.get('sum_in_cart')
+        amount = request.POST.get('amount')
+        delivery = request.POST.get('delivery')
+        delivery_list = []
+        if delivery == 'Кур\'єр на вашу адресу':
+            street = request.POST.get('street')
+            house = request.POST.get('house')
+            flat = request.POST.get('flat')
+            floor = request.POST.get('floor')
+            elevator = request.POST.get('elevator')
+            delivery_list.append([street, house, flat, floor, 'Ліфт:', elevator])
+        elif delivery == 'Самовивіз з Нової Пошти':
+            branch = request.POST.get('branch')
+            delivery_list.append([branch])
+        if name and surname and products and amount and delivery:
             products_in_checkout = ''
             message = ''
             for i in products:
                 product = ProductInCart.objects.get(id=i)
-                products_in_checkout+=f'{product.product.name} в кількості {product.amount}\n'
-            message = f'Доброго дня, {name} {surname}, ви замовили: \n{products_in_checkout}\nЦіна за покупку: {sum_in_cart} грн.\nДякуємо вам за покупку!'
+                products_in_checkout+=f'{product.product.name} в кількості {amount}\n'
+            message = f'Доброго дня, {name} {surname}, ви замовили: \n{products_in_checkout}\nЦіна за покупку: {sum_in_cart} грн.\nДоставка:\n{delivery}\n{" ".join(str(i)for i in delivery_list[0])}\nДякуємо вам за покупку!'
             # print(message)
             # print(request.user.email)
             print(send_mail('Доставка одягу', message, settings.EMAIL_HOST_USER, [request.user.email]))
