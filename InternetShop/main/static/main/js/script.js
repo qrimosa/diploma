@@ -2,7 +2,7 @@ $(document).ready(() => {
     $('.logout-button').click(function () {
         localStorage.setItem('isAuthenticated', 'false')
     })
-    if (localStorage.getItem('isAuthenticated')) {
+    if (localStorage.getItem('isAuthenticated') == 'true') {
         $('.auth-link').removeClass('d-none');
         $('.login-button').addClass('d-none');
         $('.burger-auth').addClass('d-none')
