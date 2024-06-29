@@ -7,5 +7,5 @@ $(document).ready(() => {
         $('.burger-img').removeClass('hidden')
         $(this).find('.h1').removeClass('text-decoration-underline')
     })
-
+    
 })

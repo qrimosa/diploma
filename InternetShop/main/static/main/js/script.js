@@ -1,4 +1,9 @@
 $(document).ready(() => {
+    if($(window).width() <= 768){
+        $('.catalog-offcanvas').attr('data-bs-toggle', 'offcanvas');
+        $('.catalog-offcanvas').attr('data-bs-target', '#offcanvasCategoryMobile');
+        //data-bs-target="#offcanvasTop"
+    }
     $('.logout-button').click(function () {
         localStorage.setItem('isAuthenticated', 'false')
     })
@@ -131,12 +136,9 @@ $(document).ready(() => {
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             },
             success: (data) => {
-                // console.log(data.html)
                 $('.cart-wrap').html(data.html);
                 let total = 0
                 $('.item-backet').each(function () {
-                    // console.log(this)
-                    // $('.cart-footer-price').text(`Разом: ${parseInt($('.product-price').text()) * $('#count').val()} грн`)
                     let price = parseInt($(this).find('.product-price').text())
                     let count = $(this).find('.count').val()
                     total += price * count
@@ -148,7 +150,6 @@ $(document).ready(() => {
     $('.category-name').hover(function () {
         var categoryId = $(this).data('category-id')
         var categoryImage = $(`.category-image-${categoryId}`)
-        // categoryImage.show()
         categoryImage.removeClass('d-none')
     }, function () {
         var categoryId = $(this).data('category-id');

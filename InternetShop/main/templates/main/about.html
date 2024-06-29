@@ -8,9 +8,8 @@
             <img src="{% static 'main/img/logo.png' %}" alt="NetNiche Logo" class="img-fluid mb-4" style="width: 100%; max-width: 350px;">
             <h3>Ми завжди готові допомогти вам!</h3>
             <p class="contact-info">
-                Зв'яжіться з нашою службою підтримки за наступними телефонами:<br>
-                +38 (XXX) XXX-XX-XX<br>
-                +38 (XXX) XXX-XX-XX<br>
+                Зв'яжіться з нашою службою підтримки за наступним номером телефону:<br>
+                +38 (050) 084-97-20<br>
                 Дякуємо за ваше розуміння та співпрацю!
             </p>
             <h2>Шановні клієнти!</h2>
@@ -21,6 +20,7 @@
             <h3>Якщо ви шукаєте роботу</h3>
             <div class="job-form bg-light p-4">
                 <form action="#" method="POST">
+                    {% csrf_token %}
                     <input type="text" placeholder="ПІБ" class="form-control mb-2">
                     <input type="email" placeholder="Електрона пошта" class="form-control mb-2">
                     <input type="tel" placeholder="Номер телефона" class="form-control mb-2">

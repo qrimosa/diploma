@@ -29,6 +29,17 @@
   - [Сторінка оформлення замовлення](#сторінка-оформлення-замовлення)
   - [Відправка електронного листа](#відправка-електронного-листа)
   - [Адмін-панель](#адмін-панель)
+- [Шаблони](#шаблони)
+  - [Базовий шаблон](#basehtml)
+  - [Головна сторінка](#mainhtml)
+  - [Оформлення замовлення](#checkouthtml)
+  - [Сторінка продукту](#producthtml)
+  - [Шаблон товарів у кошику](#cart_itemshtml)
+  - [Персональний кабінет](#informationhtml)
+  - [Сторінка категорій](#categorieshtml)
+  - [Сторінка про нас](#abouthtml)
+- [JavaScript](#javascript)
+  - 
 
 
 ## Користь 
@@ -54,8 +65,8 @@ ID (ідентифікатор) - це унікальний ключ, який �
 2. Швидкий доступ: Використання індексів на полях ID дозволяє швидко здійснювати пошук та отримувати дані.
 3. Зв’язки між таблицями: ID використовуються для створення зв’язків між таблицями (зовнішні ключі), що дозволяє організовувати дані у структурованому вигляді та забезпечувати їхню цілісність.
 4. Маніпуляції з даними: Операції оновлення та видалення даних стають набагато простішими та ефективнішими при використанні унікальних ID.
-## Встановлення
 
+## Встановлення
 1. Увійдіть на GitHub і знайдіть [GitHub Repository](https://github.com/qrimosa/diploma).
 2. Під назвою сховища натисніть Code.
 3. Щоб клонувати репозиторій за допомогою HTTPS, скопіюйте посилання в розділі «Клонувати за допомогою HTTPS».
@@ -102,6 +113,7 @@ graph TD
   Q(category) --> R(product)
   R(product) --> S(ProductInCart)
   ```
+
 ## Використані технології
 
 + [HTML](https://en.wikipedia.org/wiki/HTML)
@@ -121,6 +133,28 @@ graph TD
     - GitHub використовувався для зберігання коду проекту після надсилання з Git.
 3. [Google Fonts](https://fonts.google.com/)
     - Для імпорту шрифту «Montserrat» використовувалися шрифти Google.
+
+## Приступити до роботи з проектом
+  
+  ### Перелік необхідних модулів
+   - Django - фреймворк для швидкої розробки веб-додатків.
+   - jQuery - бібліотека для спрощення JavaScript коду.
+   - Bootstrap - фреймворк для створення адаптивних інтерфейсів.
+   - MySQL - реляційна база даних для зберігання даних.
+
+## Запуск проекту локально
+  - Клонуйте репозиторій: ```git clone https://github.com/qrimosa/diploma```
+  - Перейдіть до папки проєкту: ```cd diploma```, потім до папки InternetShop: ```cd internetshop```
+  - Запустіть сервер: ```python manage.py runserver```
+  - У консолі натисніть ```ctrl + lkm``` на адрес локального сервера, щоб на нього перейти
+
+## Запуск проекту віддалено 
+  - Зареєструйтеся на PythonAnywhere.
+  - Створіть новий веб-додаток.
+  - Завантажте код проєкту на сервер через GitHub.
+  - Налаштуйте базу даних.
+  - Налаштуйте WSGI конфігурацію.
+  - Запустіть веб-додаток.
 
 ## Функції магазину
 
@@ -151,7 +185,56 @@ graph TD
 ### Адмін-панель
 Реалізована кастомізація стандартної адмін-панелі Django під палітру нашого сайту та для кращого розуміння логіки її роботи.
 
-## Сторінки
+### settings.py
+```python
+#Дозволені хости
+ALLOWED_HOSTS = ['netniche.pythonanywhere.com']
+#Налаштування віддаленої бази данних
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'netniche$default',
+        'USER': 'netniche',
+        'PASSWORD': 'n123123123',
+        'HOST': 'netniche.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+    }
+}
+#static файли
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#media файли
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#налаштування пошти
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'buryachenko.ivan2007@gmail.com'
+EMAIL_HOST_PASSWORD = 'kokl pxfn hide hfmw'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+```
+### models.py
+```python
+class Category(models.Model):
+    #текстове поле для збереження назви категорії
+    name = models.CharField(max_length=255, verbose_name='Назва')
+    #поле для збереження зображення категорії
+    image = models.ImageField(verbose_name='Зображення')
+    #поле для збереження слагу (короткий опис товару по якому він знаходиться на сайті, він використовується у URL)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, blank=True, null=True)
+    #функція для відображення назви товару в адмін панелі
+    def __str__(self):
+        return f'{self.name}'
+    #клас, за допомогою якого робиться переклад на українську
+    class Meta:
+        verbose_name = 'Категорія'
+        verbose_name_plural = 'Категорії'
+```
+
+## Шаблони
 
 ### base.html
 Базовий шаблон, який використовувався в кожному наступному html-файлі.
@@ -310,54 +393,7 @@ def Registration(request):
         </div>
 </div>
 ```
-- settings.py
-```python
-#Дозволені хости
-ALLOWED_HOSTS = ['netniche.pythonanywhere.com']
-#Налаштування віддаленої бази данних
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'netniche$default',
-        'USER': 'netniche',
-        'PASSWORD': 'n123123123',
-        'HOST': 'netniche.mysql.pythonanywhere-services.com',
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-        }
-    }
-}
-#static файли
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#media файли
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-#налаштування пошти
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'buryachenko.ivan2007@gmail.com'
-EMAIL_HOST_PASSWORD = 'kokl pxfn hide hfmw'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-```
-- models.py
-```python
-class Category(models.Model):
-    #текстове поле для збереження назви категорії
-    name = models.CharField(max_length=255, verbose_name='Назва')
-    #поле для збереження зображення категорії
-    image = models.ImageField(verbose_name='Зображення')
-    #поле для збереження слагу (короткий опис товару по якому він знаходиться на сайті, він використовується у URL)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True, blank=True, null=True)
-    #функція для відображення назви товару в адмін панелі
-    def __str__(self):
-        return f'{self.name}'
-    #клас, за допомогою якого робиться переклад на українську
-    class Meta:
-        verbose_name = 'Категорія'
-        verbose_name_plural = 'Категорії'
-```
+
 
 - Під слайдером у нас відображаются товари за допомогою цикла ```for```. Прописана умова щодо кількості цих товарів, тобто їх не може бути більше 12.
 
@@ -487,7 +523,7 @@ class Category(models.Model):
 - На сторінці продукту відображаются усі його характеристики з бази даних: назва, зображення, розмір, сезон, опис, матеріал і тд. 
 
 ### cart_items.html
-ШШаблон товарів, які відображаются у кошику
+аблон товарів, які відображаются у кошику
 
 ```html
 <div class="d-flex p-2 bg-white w-100 item-backet" style="width: 18rem;">
@@ -690,7 +726,7 @@ class Category(models.Model):
         {% include 'main/categories_filter.html' %}
     </div>
 ```
-- Також тут ми включаємо в цей шаблон інший, в в якому прописане відображення товарів на сторінці:
+- Також тут ми включаємо в цей шаблон ```categories_filter.html```, в якому прописане відображення товарів на сторінці:
 
 ```html
 <div class="card-category padding-margin-0 d-flex justify-content-center align-items-center flex-column" data-price="{{product.price}}">
@@ -712,4 +748,573 @@ class Category(models.Model):
         </div>
     </div>
 </div>
+```
+
+### about.html
+Сторінка з інформацією про нас
+
+```html
+<div class="container-about">
+    <div class="row">
+        <div class="col-md-6 column_about_1">
+            <img src="{% static 'main/img/logo.png' %}" alt="NetNiche Logo" class="img-fluid mb-4" style="width: 100%; max-width: 350px;">
+            <h3>Ми завжди готові допомогти вам!</h3>
+            <p class="contact-info">
+                Зв'яжіться з нашою службою підтримки за наступним телефоном:<br>
+                +38 (050) 084-97-20<br>
+                Дякуємо за ваше розуміння та співпрацю!
+            </p>
+            <h2>Шановні клієнти!</h2>
+            <p class="client-info">
+                Ми завжди прагнемо забезпечити вам найкращий сервіс, але іноді можуть виникати непередбачені проблеми.
+                Якщо у вас виникли будь-які питання або проблеми з нашим сервісом, будь ласка, не соромтеся звертатися до нас.
+            </p>
+            <h3>Якщо ви шукаєте роботу</h3>
+            <div class="job-form bg-light p-4">
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <input type="text" placeholder="ПІБ" class="form-control mb-2">
+                    <input type="email" placeholder="Електрона пошта" class="form-control mb-2">
+                    <input type="tel" placeholder="Номер телефона" class="form-control mb-2">
+                    <button type="submit" class="btn btn-primary">Надіслати</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6 column_about_2">
+            <h1 class="netniche-title">Ми NetNiche</h1>
+            <p class="netniche-info">
+                1. Якість без компромісів: Ми ретельно добираємо матеріали та контролюємо кожен етап виробництва, щоб забезпечити найвищу якість нашого одягу. Кожен шов, кожна деталь – усе продумано до дрібниць.<br>
+                2. Сучасний дизайн: Наші дизайнери постійно стежать за останніми модними тенденціями та створюють колекцію, яка поєднує стиль і комфорт. Ми прагнемо запропонувати вам найактуальніші та трендові моделі.<br>
+                3. Індивідуальний підхід: Для нас кожен клієнт особливий. Ми готові допомогти вам знайти ідеальний образ, враховуючи ваші уподобання та особливості фігури. Наші консультанти завжди готові дати професійну пораду та допомогти з вибором.<br>
+                4. Сталий розвиток: Ми піклуємось про майбутнє нашої планети та прагнемо мінімізувати вплив на навколишнє середовище. Наш одяг виготовляється з екологічно чистих матеріалів, і ми активно підтримуємо ініціативи із захисту природи.<br>
+                5. Теплота та гостинність: Ми пишемося тим, що наш магазин – це не просто місце для покупок, а простір, де ви можете почуватися як вдома. Ми прагнемо створити атмосферу затишку та дружби, щоб кожна покупка приносила вам радість.
+            </p>
+        </div>
+    </div>
+</div>
+```
+
+- Присутня сторінка з інформацією про нас з нашими цілями і прагненнями.
+- Також є форма для тих, хто шукає роботу в нашому магазині 
+
+## views.py
+
+### product
+- У цій функції прописан динамічний slug-url, що дозволяє нам автоматично створювати url-адресу товару з його імені.
+
+```python
+def product(request, slug):
+    product = Product.objects.get(slug=slug)
+    context = {'product':product, 'characteristics': product.characteristics.get('name'), 'guide': product.guide.get('name')}
+    return render(request, 'main/product.html', context)
+```
+
+### cart
+- У функції ```cart``` ми додаємо товари до кошику за сессіоним ключем користувача
+
+```python
+def cart(request):
+    products = Product.objects.all()
+    context = {
+        'products': products,
+    }
+    if request.method == 'POST':
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.cycle_key()
+            session_key = request.session.session_key
+        product_id = request.POST.get('product_id')
+        # product = Product.objects.get(id = product_id)
+        # print(product)
+        if product_id:
+            try:
+                product = ProductInCart.objects.get(product_id = product_id, session_key=session_key)
+                product.amount += 1
+                product.save()
+            except:
+                product = ProductInCart.objects.create(product_id=product_id,session_key=session_key, amount = 1)
+            cart_count = ProductInCart.objects.filter(session_key=session_key).count()
+            return JsonResponse({'cart_count': cart_count})
+        # productsincart = ProductInCart.objects.filter(session_key=session_key)
+    return render(request, "main/product.html", context=context)
+```
+
+### about
+- Функція відображення сторінки ```about.html```
+
+```python
+def about(request):
+    context = {}
+    return render(request, 'main/about.html', context)
+```
+
+### information
+- Функція відображення сторінки інформації, також відображається за сессіоним ключем.
+
+```python
+def information(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+    context = {'products_in_cart': ProductInCart.objects.filter(session_key=session_key)}
+    return render(request, 'main/information.html',context)
+```
+
+### cart_view
+- Функція відображення товарів у кошику з фільтрацією за сессіоним ключем.
+
+```python
+def cart_view(request):
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.cycle_key()
+        session_key = request.session.session_key
+    productsincart = ProductInCart.objects.filter(session_key=session_key)
+    context = {
+        'incartproduct': productsincart,
+    }
+    html = render_to_string('main/cart_items.html', context)
+    cart_count = ProductInCart.objects.filter(session_key=session_key).count()
+    return JsonResponse({"html":html, 'cart_count':cart_count})
+```
+
+### cart_remove
+- Функція видалення товару з кошику
+
+```python
+def cart_remove(request):
+    context = {}
+    if request.method == 'POST':
+        product_in_cart_id = request.POST.get('product_in_cart_id')
+        product = ProductInCart.objects.get(id = product_in_cart_id)
+        product.delete()
+    return render(request, "main/base.html",context)
+```
+### log_out
+- Функція виходу з аккаунту 
+
+```python
+def log_out(request: HttpResponse):
+    logout(request)
+    return redirect('main')
+```
+
+### categories
+- Функція категорій
+
+```python
+def categories(request, category):
+    # отримуємо всі поля з бази даних 
+    category_obj = Category.objects.get(slug=category)
+    products_obj = Product.objects.filter(category=category_obj)
+    colors = products_obj.values('color').distinct()
+    products_list = products_obj.values_list('price')
+    min_price = products_list.order_by('price').first()
+    max_price = products_list.order_by('price').last()
+    sizes = products_obj.values('size').distinct()
+    seasons = products_obj.values('season').distinct()
+    context = {'category': category_obj, 'products':products_obj, 'colors':colors, 'max_price': max_price[0], 'min_price': min_price[0], 'sizes': sizes, 'seasons': seasons}
+    # умова для додавання фільтрів
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        category_obj = Category.objects.get(slug=category)
+        products = Product.objects.filter(category = category_obj,price__range=(request.GET.get('min_price'), request.GET.get('max_price')))
+        colors = request.GET.getlist('colors[]')
+        sizes = request.GET.getlist('sizes[]')
+        seasons = request.GET.getlist('seasons[]')
+        # додаємо фільтри на сторінку
+        if colors:
+            products = products.filter(color__in = colors)
+        if sizes:
+            products = products.filter(size__in = sizes)
+        if seasons:
+            products = products.filter(season__in = seasons)
+        html = render_to_string('main/categories_filter.html', {'products': products})
+        return JsonResponse({"html":html})
+    return render(request, 'main/categories.html', context)
+```
+
+### checkout
+- Функція оформлення замовлення 
+
+```python
+def checkout(request):
+    # отримуємо сессіоний ключ
+    session_key = request.session.session_key
+    products_in_cart = ProductInCart.objects.filter(session_key = session_key)
+    sum_in_cart = 0
+    for product in products_in_cart:
+        sum_in_cart += product.product.price*product.amount
+    context = {'products_in_cart':products_in_cart,'sum_in_cart':sum_in_cart}
+    # умова, якщо користувач не додав товари до кошику, то його перекидує на головну сторінку
+    if products_in_cart.exists():
+        pass
+    else:
+        return redirect('main')
+    # інтеграція API нової пошти 
+    api_key = '8112617626b3a78db6c84bcc50a6d102'
+    payload = {
+        "apiKey": api_key,
+        "modelName": "Address",
+        "calledMethod": "getWarehouses",
+        "methodProperties": {
+            "CityName": "Днепр",
+        }
+    }
+    response = requests.post('https://api.novaposhta.ua/v2.0/json/', json=payload)
+    if response.status_code == 200:
+        data = response.json()
+        if data['success']:
+            # отримання даних про відділення в місті Дніпро
+            warehouses = data['data']
+            addresses = [warehouse['Description'] for warehouse in warehouses if warehouse['TypeOfWarehouse']!='f9316480-5f2d-425d-bc2c-ac7cd29decf0']
+            context['addresses'] = addresses
+    # отримуємо дані з датабази
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        surname = request.POST.get('surname')
+        products = request.POST.getlist('products[]')
+        sum_in_cart = request.POST.get('sum_in_cart')
+        amount = request.POST.get('amount')
+        delivery = request.POST.get('delivery')
+        delivery_list = []
+        if delivery == 'Кур\'єр на вашу адресу':
+            street = request.POST.get('street')
+            house = request.POST.get('house')
+            flat = request.POST.get('flat')
+            floor = request.POST.get('floor')
+            elevator = request.POST.get('elevator')
+            delivery_list.append([street, house, flat, floor, 'Ліфт:', elevator])
+        elif delivery == 'Самовивіз з Нової Пошти':
+            branch = request.POST.get('branch')
+            delivery_list.append([branch])
+        if name and surname and products and amount and delivery:
+            products_in_checkout = ''
+            message = ''
+            for i in products:
+                product = ProductInCart.objects.get(id=i)
+                products_in_checkout+=f'{product.product.name} в кількості {amount}\n'
+            message = f'Доброго дня, {name} {surname}, ви замовили: \n{products_in_checkout}\nЦіна за покупку: {sum_in_cart} грн.\nДоставка:\n{delivery}\n{" ".join(str(i)for i in delivery_list[0])}\nДякуємо вам за покупку!'
+            # відправляємо електронний лист користувачу з його замовленням
+            print(send_mail('Доставка одягу', message, settings.EMAIL_HOST_USER, [request.user.email]))
+            result = {'success': True, 'message': 'Операция выполнена успешно!'}
+            return JsonResponse(result)
+    return render(request,'main/checkout.html', context)
+```
+
+## script.js
+- Скрипт, який використовується майже на кожній сторінці, та є базовим.
+
+### Функція реєстрації
+```javascript
+$('#btn-register').click(() => {
+        var url = $('#btn-register').data('cart-url');
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                email: $('input[name=email]').val(),
+                login: $('input[name=login]').val(),
+                password: $('input[name=password]').val(),
+                repeat_password: $('input[name=repeat-password]').val(),
+            },
+            success: function (response) {
+                if (response.isRegister) {
+                    $('.hello-user-register').text(`Дякуємо за реєстрацію, ${response.login}!`)
+                    $('input[name=login]').val('')
+                    $('input[name=password]').val('')
+                    $('input[name=email]').val('')
+                    $('input[name=repeat-password]').val('')
+                }
+                if (response.error) {
+                    $('.register-error').text(response.error)
+                }
+            }
+        })
+})
+```
+### Функція авторизації
+```javascript
+$('#btn-auth').click(() => {
+        var url = $('#btn-auth').data('cart-url');
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                username: $('input[name=username]').val(),
+                password: $('input[name=loginPassword]').val(),
+            },
+            success: function (response) {
+                console.log(response.isLogin)
+                if (response.isLogin) {
+                    $('.hello-user-login').text(`Вітаємо, ${response.username}!`)
+                    $('input[name=username]').val('')
+                    $('input[name=loginPassword]').val('')
+                    localStorage.setItem('isAuthenticated', 'true')
+                    $('.auth-link').removeClass('d-none')
+                    $('.login-button').addClass('d-none')
+                    $('.burger-auth').addClass('d-none')
+                    $('.burger-profile').removeClass('d-none')
+                }
+                if (response.error) {
+                    $('.login-error').text(response.error)
+                }
+            }
+        })
+    })
+```
+### Функція додавання в кошик
+```javascript
+$('.add-cart').click(function () {
+        var cartUrl = $(this).data('cart-url')
+        $.ajax({
+            url: cartUrl,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                product_id: $(this).closest('.card-category').find('input[name=product_id]').val(),
+            },
+            success: function (data) {
+                $('.badge').removeClass('d-none')
+                $('.badge').text(data.cart_count)
+            }
+        })
+    })
+```
+### Функція додавання в кошик
+```javascript
+$('.add-cart').click(function () {
+        var cartUrl = $(this).data('cart-url')
+        $.ajax({
+            url: cartUrl,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                product_id: $(this).closest('.card-category').find('input[name=product_id]').val(),
+            },
+            success: function (data) {
+                $('.badge').removeClass('d-none')
+                $('.badge').text(data.cart_count)
+            }
+        })
+    })
+```
+### Функція відображення товарів у кошику
+```javascript
+$('#backet-header').click(() => {
+        var cartviewUrl = $('#backet-header').data('cart-url')
+        $.ajax({
+            url: cartviewUrl,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: (data) => {
+                $('.cart-wrap').html(data.html);
+                let total = 0
+                $('.item-backet').each(function () {
+                    let price = parseInt($(this).find('.product-price').text())
+                    let count = $(this).find('.count').val()
+                    total += price * count
+                })
+                $('.cart-footer-price').text(`Разом: ${total} грн`)
+            }
+        })
+    })
+```
+### Функція фільтрування
+```javascript
+function updatePriceFilter() {
+        //Перевірка if в одну строку, якщо вірно - у змінну activeForm буде записано '.mobile-filters', якщо невірно - '.desktop-filters'
+        let activeForm = $(window).width() <= 768 ? '.mobile-filters' : '.desktop-filters'
+        url = $('#category-url').data('category-url')
+        minPrice = ($(`${activeForm} .min-price-slider`).val())
+        maxPrice = ($(`${activeForm} .max-price-slider`).val())
+        console.log($(`${activeForm} .min-price-slider`))
+        colors = []
+        seasons = []
+        sizes = []
+        $(`${activeForm} .color-filter:checked`).each(function () {
+            colors.push($(this).attr('id'))
+        })
+        $(`${activeForm} .size-filter:checked`).each(function () {
+            sizes.push($(this).attr('id'))
+        })
+        $(`${activeForm} .season-filter:checked`).each(function () {
+            seasons.push($(this).attr('id'))
+        })
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                min_price: minPrice,
+                max_price: maxPrice,
+                colors: colors,
+                sizes: sizes,
+                seasons: seasons,
+            },
+            success: function (data) {
+                $('#product-list').html(data.html);
+                var newUrl = url + '?price_from=' + minPrice + '&price_to=' + maxPrice;
+                if (colors.length > 0) {
+                    newUrl += '&colors=' + colors.join(',')
+                }
+                if (seasons.length > 0) {
+                    newUrl += '&seasons=' + seasons.join(',')
+                }
+                if (sizes.length > 0) {
+                    newUrl += '&sizes=' + sizes.join(',')
+                }
+                //Зміна url адреси за допомогою History API
+                history.pushState({}, '', newUrl)
+            }
+        })
+    }
+    let activeForm = $(window).width() <= 768 ? '.mobile-filters' : '.desktop-filters'
+    $(`${activeForm} .min-price-slider,${activeForm} .max-price-slider,${activeForm} .color-filter,${activeForm} .size-filter,${activeForm} .season-filter`).on('change', updatePriceFilter);
+    let priceGap = 0;
+    function updateProgress() {
+        let activeForm = $(window).width() <= 768 ? '.mobile-filters' : '.desktop-filters'
+        let minVal = parseInt($(`${activeForm} .range-input input:eq(0)`).val()),
+            maxVal = parseInt($(`${activeForm} .range-input input:eq(1)`).val())
+        console.log($(`${activeForm} .range-input input:eq(0)`))
+        let minRange = parseInt($(`${activeForm} .min-price-slider`).attr("min")),
+            maxRange = parseInt($(`${activeForm} .max-price-slider`).attr("max"))
+        let leftValue = ((minVal - minRange) / (maxRange - minRange)) * 100 + "%"
+        let rightValue = ((maxRange - maxVal) / (maxRange - minRange)) * 100 + "%"
+        $(`${activeForm} .progress`).css({
+            "left": leftValue,
+            "right": rightValue
+        });
+        $(`${activeForm} .input-min`).val(minVal);
+        $(`${activeForm} .input-max`).val(maxVal);
+    }
+    updateProgress();
+    $(".price-input input").each(function (index, input) {
+        let activeForm = $(window).width() <= 768 ? '.mobile-filters' : '.desktop-filters'
+        $(input).on("input", function (e) {
+            let minPrice = parseInt($(`${activeForm} .price-input input:eq(0)`).val()),
+                maxPrice = parseInt($(`${activeForm} .price-input input:eq(1)`).val())
+
+            if ((maxPrice - minPrice >= priceGap) && maxPrice <= $(`${activeForm} .max-price-slider`).attr("max")) {
+                if ($(this).hasClass("input-min")) {
+                    $(`${activeForm} .min-price-slider`).val(minPrice)
+                    updateProgress()
+                } else {
+                    $(`${activeForm} .max-price-slider`).val(maxPrice)
+                    updateProgress()
+                }
+            }
+        });
+    });
+    $(".range-input input").each(function (index, input) {
+        let activeForm = $(window).width() <= 768 ? '.mobile-filters' : '.desktop-filters'
+        $(input).on("input", function (e) {
+            let minVal = parseInt($(`${activeForm} .range-input input:eq(0)`).val()),
+                maxVal = parseInt($(`${activeForm} .range-input input:eq(1)`).val())
+            if ((maxVal - minVal) < priceGap) {
+                if ($(this).hasClass("range-min")) {
+                    $(`${activeForm} .range-input input:eq(0)`).val(maxVal - priceGap)
+                    updateProgress();
+                } else {
+                    $(`${activeForm} .range-input input:eq(1)`).val(minVal + priceGap)
+                    updateProgress();
+                }
+            } else {
+                updateProgress();
+            }
+        });
+    });
+```
+
+## script-cart.js
+- Скрипт, який використовується для відображення товарів у кошику.
+```javascript
+$('.delete-item-from-cart').click(function () {
+        var cartUrl = $('.delete-item-from-cart').data('cart-url');
+        var product_id = $(this).data('product-id');
+        var cartviewUrl = $('#backet-header').data('cart-url');
+        $.ajax({
+            url: cartUrl,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                product_in_cart_id: product_id,
+            },
+            success: () => {
+                $.ajax({
+                    url: cartviewUrl,
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                        product_in_cart_id: $('input[name=product_in_cart_id]').val(),
+                    },
+                    success: (data) => {
+                        if (data.cart_count == 0) {
+                            $('.badge').addClass('d-none')
+                        }
+                        else {
+                            $('.badge').text(data.cart_count)
+                        }
+                        $('.cart-wrap').html(data.html);
+                        let total = 0;
+                        $('.item-backet').each(function () {
+                            let price = parseInt($(this).find('.product-price').text())
+                            let count = $(this).find('.count').val()
+                            total += price * count
+                        })
+                        $('.cart-footer-price').text(`Разом: ${total} грн`);
+                    }
+                })
+            }
+        })
+    })
+```
+
+## search.js
+- Скрипт, який використовується для поля пошуку в header
+
+```javascript
+    let availableProducts = [];
+    const resultsBox = $(".result-box")
+    const inputBox = $("#search-header")
+    inputBox.on("keyup", function () {
+
+        resultsBox.show()
+        $('main').addClass('fade')
+        $('main').css('opacity', 0.5)
+        let input = inputBox.val().toLowerCase().trim();
+        let result = availableProducts.filter((product) => {
+            return product.name.toLowerCase().includes(input);
+        });
+        display(result.slice(0, 5));
+        if (!result.length) {
+            resultsBox.html('');
+        }
+    });
+    function display(result) {
+        const content = result.map((product) => {
+            return `<li onclick="selectInput('${product.slug}')">${product.name}</li>`;
+        });
+        resultsBox.html("<ul>" + content.join('') + "</ul>");
+    }
+    window.selectInput = function (url) {
+        window.location.href = `product/${url}`
+    }
+    inputBox.blur(() => {
+        setTimeout(function () {
+            resultsBox.html('');
+        }, 200);
+    })
+    //отримуємо в масив availableProducts назви усіх продуктів
+    $.ajax({
+        url: $('#data-get-products-url').data('get-products-url'),
+        method: 'GET',
+        success: function (data) {
+            availableProducts = data
+        }
+    });
 ```

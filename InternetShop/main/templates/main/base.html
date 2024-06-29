@@ -142,7 +142,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body d-flex flex-column gap-15">
-                <a data-bs-toggle="modal" data-bs-target="#catalogModal" class="text-decoration-none mt-2 burger-item"
+                <a data-bs-toggle="modal" data-bs-target="#catalogModal" class="text-decoration-none mt-2 burger-item catalog-offcanvas"
                     href="#">
                     <div class="container d-flex align-items-center gap-15" type="button">
                         <img class="burger-img" src="{% static 'main/img/burger-catalog.svg' %}" alt="">
@@ -176,6 +176,27 @@
                         <h1 class="h1 padding-margin-0">Мій профіль</h1>
                     </div>
                 </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="offcanvas offcanvas-end d-flex flex-column gap-15" tabindex="-1" id="offcanvasCategoryMobile"
+            aria-labelledby="offcanvasCategoryMobileLabel">
+            <button type="button" class="btn-close position-absolute m-2 end-0" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <div class="mt-5 d-flex justify-content-around flex-column gap-15">
+                {% for category in categorys %}
+                    <a href="{% url 'categories' category.slug %}" role="button" data-category-id="{{category.id}}"
+                        class="container width-100 category-name">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="h1 padding-margin-0 text-decoration-none">{{category.name}}</p>
+                            </div>
+                            <div class="col-auto">
+                                <img src="{% static 'main/img/right-arrow.svg' %}" alt="">
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -224,6 +245,7 @@
             </div>
         </div>
     </div> -->
+
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBacket" aria-labelledby="offcanvasBacketLabel">
         <div class="offcanvas-header">
             <h3 class="offcanvas-title" id="offcanvasRightLabel">Кошик</h3>
