@@ -1,5 +1,6 @@
 $(document).ready(() => {
-    $('.minus').click(function () {
+    $('.minus').off('click').click(function (event) {
+        event.stopPropagation()
         let id = $(this).data('id');
         let $input = $('.count[data-id="' + id + '"]');
         let total = 0
@@ -13,8 +14,8 @@ $(document).ready(() => {
         })
         $('.cart-footer-price').text(`Разом: ${total} грн`);
     });
-    $('.plus').click(function () {
-        console.log(222222)
+    $('.plus').off('click').click(function (event) {
+        event.stopPropagation()
         let id = $(this).data('id');
         let $input = $('.count[data-id="' + id + '"]');
         $input.val(Number($input.val()) + 1);

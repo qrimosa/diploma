@@ -23,42 +23,7 @@
     </form>
     <div class="row g-3 cart-wrap mt-3">
         <h2 class='h1'>Ваше замовлення</h2>
-        {% for product in products_in_cart %}
-        <div class="d-flex p-2 bg-white w-100 item-backet" style="width: 18rem;">
-            <img src="{{product.product.image.url}}" width="120px" alt="...">
-            <div class="card-body">
-                <div class="ml-1 d-flex justify-content-between">
-                    <h5 class="h2">{{product.product.name}}</h5>
-                    <form action="" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="product_id" value="{{product.product.id}}">
-                        <div class="dropdown">
-                            <img src="{% static 'main/img/three-dots.svg' %}" data-bs-toggle="dropdown" role='button'
-                                width="30px" alt="">
-                            <ul class="dropdown-menu">
-                                <li><button type="button" data-product-id="{{product.id}}"
-                                        data-cart-url="{% url 'cart_remove' %}"
-                                        class="dropdown-item delete-item-from-cart" href="#">Видалити</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </form>
-                </div>
-                <div class="d-flex align-items-end justify-content-end p-2 gap-15 h-50">
-                    <div class="d-flex align-items-center">
-                        <span class="minus" data-id="{{forloop.counter}}" id="minus"><img
-                                src="{% static 'main/img/minus.svg' %}" width="20px" alt=""></span>
-                        <input type="number" data-id="{{forloop.counter}}" class="count" id="count" name="qty"
-                            value="{{product.amount}}">
-                        <span class="plus" data-id="{{forloop.counter}}" id="plus"><img
-                                src="{% static 'main/img/plus.svg' %}" width="20px" alt=""></span>
-                    </div>
-                </div>
-                <p class="h1 padding-margin-0 d-flex justify-content-end">{{product.product.price}} грн</p>
-            </div>
-        </div>
-        <hr>
-        {% endfor %}
+        {% include 'main/cart_items.html' %}
         <h2 class="cart-footer-price" style="font-family: 'Montserrat'; font-size: 25px; font-weight: 700;">Разом:
             {{sum_in_cart}} грн</h2>
         <h2>Доставка</h2>
@@ -78,16 +43,16 @@
                         <input type="text" class="form-control" id="validationDefault02" value="" required>
                     </div>
                     <div class="col-md-4">
-                        <label for="validationDefault02" class="form-label">Квартира</label>
-                        <input type="text" class="form-control" id="validationDefault02" value="" required>
+                        <label for="validationDefault03" class="form-label">Квартира</label>
+                        <input type="text" class="form-control" id="validationDefault03" value="" required>
                     </div>
                     <div class="col-md-4">
-                        <label for="validationDefault02" class="form-label">Поверх</label>
-                        <input type="text" class="form-control" id="validationDefault02" value="" required>
+                        <label for="validationDefault04" class="form-label">Поверх</label>
+                        <input type="text" class="form-control" id="validationDefault04" value="" required>
                     </div>
                     <div class="col-md-3">
-                        <label for="validationDefault04" class="form-label">Ліфт</label>
-                        <select class="form-select" id="validationDefault04" required>
+                        <label for="validationDefault05" class="form-label">Ліфт</label>
+                        <select class="form-select" id="validationDefault05" required>
                             <option selected disabled value="">Наявність важкого ліфта</option>
                             <option>Присутній</option>
                             <option>Відсутній</option>
@@ -102,8 +67,8 @@
                 </label>
                 <form class="pickup-from-nova-poshta-form d-none" action="">
                     <div class="col-md-3">
-                        <label for="validationDefault04" class="form-label">Відділення</label>
-                        <select class="form-select" id="validationDefault04" required>
+                        <label for="validationDefault06" class="form-label">Відділення</label>
+                        <select class="form-select" id="validationDefault06" required>
                             <option selected disabled value="">Виберіть ваше відділення</option>
                             {% for option in addresses %}
                             <option value="{{option}}">{{option}}</option>
