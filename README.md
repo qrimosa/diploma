@@ -38,8 +38,24 @@
   - [Персональний кабінет](#informationhtml)
   - [Сторінка категорій](#categorieshtml)
   - [Сторінка про нас](#abouthtml)
-- [JavaScript](#javascript)
-  - 
+- [Функції відображення](#viewspy)
+  - [product](#product)
+  - [cart](#cart)
+  - [about](#about)
+  - [information](#information)
+  - [cart_view](#cart_view)
+  - [cart_remove](#cart_remove)
+  - [log_out](#log_out)
+  - [categories](#categories)
+  - [checkout](#checkout)
+- [script.js](#scriptjs)
+  - [Реєстрація](#функція-реєстрації)
+  - [Авторизація](#функція-авторизації)
+  - [Додавання в кошик](#функція-додавання-в-кошик)
+  - [Відображення товарів у кошику](#функція-відображення-товарів-у-кошику)
+  - [Функція фільтрування](#функція-фільтрування)
+- [script-cart.js](#script-cartjs)
+- [search.js](#searchjs)
 
 
 ## Користь 
@@ -1083,24 +1099,7 @@ $('.add-cart').click(function () {
         })
     })
 ```
-### Функція додавання в кошик
-```javascript
-$('.add-cart').click(function () {
-        var cartUrl = $(this).data('cart-url')
-        $.ajax({
-            url: cartUrl,
-            type: 'POST',
-            data: {
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                product_id: $(this).closest('.card-category').find('input[name=product_id]').val(),
-            },
-            success: function (data) {
-                $('.badge').removeClass('d-none')
-                $('.badge').text(data.cart_count)
-            }
-        })
-    })
-```
+
 ### Функція відображення товарів у кошику
 ```javascript
 $('#backet-header').click(() => {
@@ -1232,6 +1231,7 @@ function updatePriceFilter() {
 
 ## script-cart.js
 - Скрипт, який використовується для відображення товарів у кошику.
+
 ```javascript
 $('.delete-item-from-cart').click(function () {
         var cartUrl = $('.delete-item-from-cart').data('cart-url');
